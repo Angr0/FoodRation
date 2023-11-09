@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ModalClose,
+  Stack,
 } from "@mui/joy";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -54,11 +55,25 @@ const Header = () => {
         </DialogTitle>
         <DialogContent>
           <List>
-            {navigationTexts.map(({ text }) => (
-              <ListItem key={text}>
-                <Button>{text}</Button>
-              </ListItem>
-            ))}
+            <Stack alignItems="center">
+              {navigationTexts.map(({ text }) => (
+                <ListItem key={text}>
+                  <Button
+                    color="neutral"
+                    variant={
+                      text === "Log in"
+                        ? "outlined"
+                        : text === "Sing up"
+                        ? "solid"
+                        : "plain"
+                    }
+                    size="lg"
+                  >
+                    {text}
+                  </Button>
+                </ListItem>
+              ))}
+            </Stack>
           </List>
         </DialogContent>
       </Drawer>
