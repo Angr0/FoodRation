@@ -1,0 +1,9 @@
+@import "variables";
+
+.container {
+  width: 100%;
+  background-color: $secondary;
+
+  display: flex;
+  justify-content: space-between;
+}
