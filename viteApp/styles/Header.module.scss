@@ -2,8 +2,17 @@
 
 .container {
   width: 100%;
+
   background-color: $secondary;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    max-width: 1250px;
+  }
 }

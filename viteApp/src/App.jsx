@@ -1,12 +1,10 @@
-import { Button } from "@mui/joy";
 import style from "../styles/App.module.scss";
+import CustomInput from "../components/Items/CustomInput.jsx";
 
 function App() {
   return (
     <div className={style.container}>
-      <Button color="primary" variant="outlined">
-        Hello world
-      </Button>
+      <CustomInput />
     </div>
   );
 }
