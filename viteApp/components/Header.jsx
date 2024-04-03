@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import style from "../styles/Header.module.scss";
 import {
+  Box,
   Button,
   DialogContent,
   DialogTitle,
@@ -8,61 +8,104 @@ import {
   List,
   ListItem,
   ModalClose,
+  Stack,
 } from "@mui/joy";
 import MenuIcon from "@mui/icons-material/Menu";
+import Logo from "./Items/Logo.jsx";
+import navigationTexts from "../helper/headerTexts.js";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const navigationTexts = [
-    {
-      text: "Log in",
-      link: "",
-    },
-    {
-      text: "Sing up",
-      link: "",
-    },
-    {
-      text: "My fridge",
-      link: "",
-    },
-    {
-      text: "Cooking history",
-      link: "",
-    },
-    {
-      text: "Shopping list",
-      link: "",
-    },
-    {
-      text: "Calculator",
-      link: "",
-    },
-  ];
+
+  const getVariant = (text) => {
+    switch (text) {
+      case "Log in":
+        return "outlined";
+      case "Sign up":
+        return "soft";
+      default:
+        return "plain";
+    }
+  };
+
+  const closeModal = () => setOpen(false);
+
   return (
-    <div className={style.container}>
-      <img src="logo.png" alt="Logo" />
+    <Box
+      className="container"
+      sx={{
+        backgroundColor: "#F5F5F5",
+        padding: { xs: "6px 0 6px 12px", md: "12px" },
+      }}
+    >
+      <Box className="content">
+        <Logo />
 
-      <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
-        <MenuIcon />
-      </Button>
-      <Drawer open={open} anchor="top" onClose={() => setOpen(false)}>
-        <ModalClose />
-
-        <DialogTitle>
-          <img src="logo.png" alt="Logo" />
-        </DialogTitle>
-        <DialogContent>
-          <List>
-            {navigationTexts.map(({ text }) => (
-              <ListItem key={text}>
-                <Button>{text}</Button>
+        <Button
+          variant="plain"
+          color="neutral"
+          onClick={() => setOpen(true)}
+          sx={{ display: { md: "none" } }}
+        >
+          <MenuIcon />
+        </Button>
+        <Stack
+          direction={"row-reverse"}
+          gap={2}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          {navigationTexts.map(({ text, link }) => (
+            <Link to={link} key={text}>
+              <ListItem>
+                <Button
+                  sx={{ borderWidth: text === "Log in" ? ".25rem" : "" }}
+                  variant={getVariant(text)}
+                  color="danger"
+                >
+                  {text}
+                </Button>
               </ListItem>
-            ))}
-          </List>
-        </DialogContent>
-      </Drawer>
-    </div>
+            </Link>
+          ))}
+        </Stack>
+        <Drawer open={open} anchor="top" onClose={() => setOpen(false)}>
+          <ModalClose />
+
+          <DialogTitle>
+            <Logo />
+          </DialogTitle>
+
+          <DialogContent>
+            <List>
+              <Stack>
+                {navigationTexts.map(({ text, link }) => (
+                  <Link to={link}>
+                    <ListItem key={text}>
+                      <Button
+                        onClick={closeModal}
+                        color="neutral"
+                        variant={
+                          text === "Log in"
+                            ? "outlined"
+                            : text === "Sign up"
+                            ? "solid"
+                            : "plain"
+                        }
+                        size="lg"
+                        sx={{ width: "100%" }}
+                      >
+                        {text}
+                      </Button>
+                    </ListItem>
+                  </Link>
+                ))}
+              </Stack>
+            </List>
+          </DialogContent>
+        </Drawer>
+      </Box>
+    </Box>
   );
 };
 

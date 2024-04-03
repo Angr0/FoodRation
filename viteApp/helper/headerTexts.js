@@ -9,19 +9,19 @@ const navigationTexts = [
   },
   {
     text: "My fridge",
-    link: "",
+    link: "/fridge",
   },
   {
     text: "Cooking history",
-    link: "",
+    link: "/cooking_history",
   },
   {
     text: "Shopping list",
-    link: "",
+    link: "/shopping_list",
   },
   {
     text: "Calculator",
-    link: "",
+    link: "/calculator",
   },
 ];
 
