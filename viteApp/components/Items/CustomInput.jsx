@@ -3,7 +3,13 @@ import { Input } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 
 const CustomInput = () => {
-  return <Input variant="soft" startDecorator={<SearchIcon />} />;
+  return (
+    <Input
+      variant="soft"
+      sx={{ width: { md: "100%" } }}
+      startDecorator={<SearchIcon />}
+    />
+  );
 };
 
 export default CustomInput;

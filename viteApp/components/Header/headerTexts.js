@@ -4,7 +4,7 @@ const navigationTexts = [
     link: "",
   },
   {
-    text: "Sing up",
+    text: "Sign up",
     link: "",
   },
   {

@@ -22,7 +22,7 @@ const Header = () => {
     switch (text) {
       case "Log in":
         return "outlined";
-      case "Sign in":
+      case "Sign up":
         return "soft";
       default:
         return "plain";
@@ -56,8 +56,9 @@ const Header = () => {
           {navigationTexts.map(({ text }) => (
             <ListItem key={text}>
               <Button
-                sx={{ borderWidth: text === "Log in" ? "0.25rem" : "2rem" }}
+                sx={{ borderWidth: text === "Log in" ? ".25rem" : "" }}
                 variant={getVariant(text)}
+                color="danger"
               >
                 {text}
               </Button>
@@ -82,7 +83,7 @@ const Header = () => {
                       variant={
                         text === "Log in"
                           ? "outlined"
-                          : text === "Sing up"
+                          : text === "Sign up"
                           ? "solid"
                           : "plain"
                       }
