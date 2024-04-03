@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import "../styles/index.css";
-import Header from "../components/Header/Header.jsx";
-import { Box, extendTheme, Stack, THEME_ID } from "@mui/joy";
+import { extendTheme, THEME_ID } from "@mui/joy";
 import { CssVarsProvider } from "@mui/joy/styles";
 import customTheme from "../helper/customTheme.js";
 import { Experimental_CssVarsProvider } from "@mui/material";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
+import Header from "../components/Header.jsx";
+import App from "./App.jsx";
 
 const theme = extendTheme(customTheme);
 
@@ -19,19 +20,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         modeStorageKey="demo_light-mode-by-default"
         disableNestedContext
       >
-        <Stack alignItems="center" sx={{ width: "100vw" }}>
-          <Header />
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "1250px",
-              padding: { xs: "0 .5rem" },
-            }}
-          >
-            <App />
-          </Box>
-        </Stack>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </CssVarsProvider>
-    </Experimental_CssVarsProvider>{" "}
+    </Experimental_CssVarsProvider>
   </React.StrictMode>,
 );
