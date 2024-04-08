@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
 import CelebrationIcon from "@mui/icons-material/Celebration.js";
 import { Button, Stack } from "@mui/joy";
 import Sidebar from "../Items/Sidebar.jsx";
-import CustomInput from "../Items/CustomInput.jsx";
+import SearchInput from "../Items/SearchInput.jsx";
 import TastesCategories from "../Items/TastesCategories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
@@ -31,15 +31,23 @@ const MainPage = () => {
     },
   ];
 
+  const [dishTemperature, setDishTemperature] = useState(["hot"]);
+  const [dishTaste, setDishTaste] = useState([]);
+
   return (
-    <Stack direction="row" justifyContent="center" gap={4}>
-      <Sidebar style={{ display: { xs: "none", md: "block" } }} />
+    <Stack direction="row" justifyContent="center" gap={4} mt={2} mb={4}>
+      <Sidebar
+        style={{ display: { xs: "none", md: "block" } }}
+        dishTaste={dishTaste}
+        setDishTaste={setDishTaste}
+      />
 
       <Stack
-        direction="column"
         alignItems="center"
         spacing={{ xs: 1, sm: 4 }}
-        sx={{ width: { xs: "100%", md: "auto" }, margin: "1rem 0" }}
+        sx={{
+          width: { xs: "100%", md: "var(--max-width-main-content)" },
+        }}
       >
         <Stack
           sx={{ width: "100%" }}
@@ -47,16 +55,22 @@ const MainPage = () => {
           spacing={{ xs: 1, md: 4 }}
           direction={{ xs: "column", md: "row" }}
         >
-          <CustomInput />
+          <SearchInput />
+
           <TastesCategories
             style={{
               display: { sx: "block", md: "none" },
               overflowX: "scroll",
               maxWidth: "100%",
             }}
+            value={dishTaste}
+            setValue={setDishTaste}
           />
           <Stack direction="row" justifyContent="center" gap={{ xs: 1, md: 4 }}>
-            <TemperatureToggle />
+            <TemperatureToggle
+              value={dishTemperature}
+              setValue={setDishTemperature}
+            />
             <Button>Find&nbsp;recipe</Button>
           </Stack>
         </Stack>

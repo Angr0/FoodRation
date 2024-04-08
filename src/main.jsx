@@ -5,8 +5,7 @@ import { extendTheme, THEME_ID } from "@mui/joy";
 import { CssVarsProvider } from "@mui/joy/styles";
 import customTheme from "../helper/customTheme.js";
 import { Experimental_CssVarsProvider } from "@mui/material";
-import { BrowserRouter, RouterProvider } from "react-router-dom";
-import Header from "../components/Header.jsx";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 
 const theme = extendTheme(customTheme);

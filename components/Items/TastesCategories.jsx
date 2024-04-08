@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 import tastesCategories from "../../helper/tasteCategories.js";
 
-const TastesCategories = ({ style = {} }) => {
-  const [value, setValue] = useState([]);
-
+const TastesCategories = ({ style = {}, value, setValue }) => {
   return (
     <ToggleButtonGroup
       spacing={1}

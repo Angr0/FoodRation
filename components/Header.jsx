@@ -36,7 +36,7 @@ const Header = () => {
       className="container"
       sx={{
         backgroundColor: "#F5F5F5",
-        padding: { xs: "6px 0 6px 12px", md: "12px" },
+        padding: { xs: ".5rem 0 .75rem .5rem", md: ".75rem 1.5rem" },
       }}
     >
       <Box className="content">
@@ -69,10 +69,15 @@ const Header = () => {
             </Link>
           ))}
         </Stack>
-        <Drawer open={open} anchor="top" onClose={() => setOpen(false)}>
+        <Drawer
+          open={open}
+          size={"lg"}
+          anchor="top"
+          onClose={() => setOpen(false)}
+        >
           <ModalClose />
 
-          <DialogTitle>
+          <DialogTitle onClick={closeModal}>
             <Logo />
           </DialogTitle>
 

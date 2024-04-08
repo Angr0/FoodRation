@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 
-const TemperatureToggle = () => {
-  const [value, setValue] = useState(["hot"]);
-
+const TemperatureToggle = ({ value, setValue }) => {
   return (
     <ToggleButtonGroup
       value={value}
