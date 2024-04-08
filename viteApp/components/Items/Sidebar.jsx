@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider, Stack } from "@mui/joy";
-import TastesCategories from "./Taste categories/TastesCategories.jsx";
+import TastesCategories from "./TastesCategories.jsx";
 
 const Sidebar = ({ style }) => {
   return (

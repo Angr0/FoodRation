@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import MainPage from "../components/Pages/MainPage.jsx";
 import Header from "../components/Header.jsx";
 import React from "react";
+import Recipes from "../components/Pages/Recipes.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       >
         <Routes>
           <Route index element={<MainPage />} />
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/calculator" element={<div>calculator</div>} />
           <Route path="/shopping_list" element={<div>shopping_list</div>} />
           <Route path="/cooking_history" element={<div>cooking_history</div>} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
-import tastesCategories from "./tasteCategories.js";
+import tastesCategories from "../../helper/tasteCategories.js";
 
 const TastesCategories = ({ style = {} }) => {
   const [value, setValue] = useState([]);

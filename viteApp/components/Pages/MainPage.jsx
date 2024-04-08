@@ -5,7 +5,7 @@ import CelebrationIcon from "@mui/icons-material/Celebration.js";
 import { Button, Stack } from "@mui/joy";
 import Sidebar from "../Items/Sidebar.jsx";
 import CustomInput from "../Items/CustomInput.jsx";
-import TastesCategories from "../Items/Taste categories/TastesCategories.jsx";
+import TastesCategories from "../Items/TastesCategories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
 

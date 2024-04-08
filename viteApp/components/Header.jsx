@@ -80,7 +80,7 @@ const Header = () => {
             <List>
               <Stack>
                 {navigationTexts.map(({ text, link }) => (
-                  <Link to={link}>
+                  <Link to={link} key={text}>
                     <ListItem key={text}>
                       <Button
                         onClick={closeModal}

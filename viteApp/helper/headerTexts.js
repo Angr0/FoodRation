@@ -23,6 +23,10 @@ const navigationTexts = [
     text: "Calculator",
     link: "/calculator",
   },
+  {
+    text: "Recipes",
+    link: "/recipes",
+  },
 ];
 
 export default navigationTexts;
