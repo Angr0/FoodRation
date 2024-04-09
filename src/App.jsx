@@ -4,6 +4,8 @@ import MainPage from "../components/Pages/MainPage.jsx";
 import Header from "../components/Header.jsx";
 import React from "react";
 import Recipes from "../components/Pages/Recipes.jsx";
+import Recipe from "../components/Items/Recipe.jsx";
+import Fridge from "../components/Pages/Fridge.jsx";
 
 function App() {
   return (
@@ -18,11 +20,20 @@ function App() {
       >
         <Routes>
           <Route index element={<MainPage />} />
-          <Route path="/recipes" element={<Recipes />} />
-          <Route path="/calculator" element={<div>calculator</div>} />
-          <Route path="/shopping_list" element={<div>shopping_list</div>} />
-          <Route path="/cooking_history" element={<div>cooking_history</div>} />
-          <Route path="/fridge" element={<div>fridge1</div>} />
+
+          <Route path="recipes" element={<Recipes />} />
+          <Route
+            path="recipe/:recipe"
+            element={<Recipe />}
+            loader={({ params }) => {
+              params.recipe;
+            }}
+          />
+
+          <Route path="calculator" element={<div>calculator</div>} />
+          <Route path="shopping_list" element={<div>shopping_list</div>} />
+          <Route path="cooking_history" element={<div>cooking_history</div>} />
+          <Route path="fridge" element={<Fridge />} />
           <Route path="*" element={<div>error page</div>} />
         </Routes>
       </Box>

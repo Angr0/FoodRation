@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
-import tastesCategories from "../../helper/tasteCategories.js";
+import axios from "axios";
 
 const TastesCategories = ({ style = {}, value, setValue }) => {
+  const [tasteCategories, setTasteCategories] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:8000/flavours/").then(({ data }) => {
+      setTasteCategories(data);
+    });
+  }, []);
+
   return (
     <ToggleButtonGroup
       spacing={1}
@@ -15,7 +22,7 @@ const TastesCategories = ({ style = {}, value, setValue }) => {
         ...style,
       }}
     >
-      {tastesCategories?.map((taste) => (
+      {tasteCategories?.map((taste) => (
         <Button key={taste} value={taste} sx={{ padding: "0 1rem" }}>
           {taste}
         </Button>

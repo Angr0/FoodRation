@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/joy";
-import recipes from "../../helper/recipesMock.js";
 import RecipeCard from "../Items/RecipeCard.jsx";
 import SearchInput from "../Items/SearchInput.jsx";
 import TastesCategories from "../Items/TastesCategories.jsx";
 import Sidebar from "../Items/Sidebar.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
+import axios from "axios";
 
 const Recipes = () => {
-  const [displayedRecipes, setDisplayedRecipes] = useState(recipes);
+  const [recipes, setRecipes] = useState([]);
+  const [displayedRecipes, setDisplayedRecipes] = useState([]);
   const [dishTemperature, setDishTemperature] = useState(["hot"]);
   const [dishTaste, setDishTaste] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/recipes/").then(({ data }) => {
+      setRecipes(data);
+      setDisplayedRecipes(data);
+    });
+  }, []);
 
   const filterRecipes = (e) => {
     const value = e?.target?.value;
@@ -64,21 +72,14 @@ const Recipes = () => {
           </Stack>
         </Stack>
         {displayedRecipes.map(
-          ({
-            name,
-            is_warm,
-            icon_link,
-            categories,
-            type_name,
-            ingredients,
-          }) => (
+          ({ name, is_warm, icon_link, categories, type, ingredients }) => (
             <RecipeCard
               key={name}
               name={name}
               isWarm={is_warm}
               iconUrl={icon_link}
               categories={categories}
-              typeName={type_name}
+              typeName={type}
               ingredients={ingredients}
             />
           ),

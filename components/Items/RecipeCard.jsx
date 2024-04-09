@@ -15,7 +15,7 @@ const RecipeCard = ({
 }) => {
   return (
     <Link
-      to={"/"}
+      to={`/recipe/${name}`}
       style={{
         maxWidth: "var(--max-width-main-content)",
         width: "100%",
@@ -62,7 +62,7 @@ const RecipeCard = ({
             sx={{ display: { xs: "none", md: "block" } }}
           >
             Ingredients:{" "}
-            {ingredients.map(({ ingredient }, index) => (
+            {ingredients.map((ingredient, index) => (
               <span key={ingredient}>
                 {ingredient}
                 <ComaWithoutLast index={index} length={ingredients.length} />

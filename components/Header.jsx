@@ -54,6 +54,7 @@ const Header = () => {
           direction={"row-reverse"}
           gap={2}
           sx={{ display: { xs: "none", md: "flex" } }}
+          alignItems={"center"}
         >
           {navigationTexts.map(({ text, link }) => (
             <Link to={link} key={text}>
