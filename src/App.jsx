@@ -7,6 +7,7 @@ import Recipes from "../components/Pages/Recipes.jsx";
 import Recipe from "../components/Items/Recipe.jsx";
 import Fridge from "../components/Pages/Fridge.jsx";
 import Profile from "../components/Pages/Profile.jsx";
+import Calculator from "../components/Pages/Calculator.jsx";
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -33,7 +34,7 @@ function App() {
             }}
           />
 
-          <Route path="calculator" element={<div>calculator</div>} />
+          <Route path="calculator" element={<Calculator />} />
           <Route path="shopping_list" element={<div>shopping_list</div>} />
           <Route path="cooking_history" element={<div>cooking_history</div>} />
           <Route path="fridge" element={<Fridge />} />
