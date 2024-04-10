@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
 import CelebrationIcon from "@mui/icons-material/Celebration.js";
-import { Button, Stack } from "@mui/joy";
+import { Autocomplete, Button, Stack } from "@mui/joy";
 import Sidebar from "../Items/Sidebar.jsx";
-import SearchInput from "../Items/SearchInput.jsx";
 import TastesCategories from "../Items/TastesCategories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { matchSorter } from "match-sorter";
 
 const MainPage = () => {
   const content = [
@@ -33,6 +35,16 @@ const MainPage = () => {
 
   const [dishTemperature, setDishTemperature] = useState(["hot"]);
   const [dishTaste, setDishTaste] = useState([]);
+  const [autocompleteOptions, setAutocompleteOptions] = useState([]);
+
+  function getRecipesToSearch() {
+    axios.get("http://localhost:8000/search-data").then(({ data }) => {
+      setAutocompleteOptions(data);
+    });
+  }
+
+  const filterOptions = (options, { inputValue }) =>
+    matchSorter(options, inputValue, { keys: ["name", "ingredients"] });
 
   return (
     <Stack direction="row" justifyContent="center" gap={4} mt={2} mb={4}>
@@ -55,7 +67,14 @@ const MainPage = () => {
           spacing={{ xs: 1, md: 4 }}
           direction={{ xs: "column", md: "row" }}
         >
-          <SearchInput />
+          <Autocomplete
+            options={autocompleteOptions}
+            getOptionLabel={(option) => option.name}
+            type={"search"}
+            sx={{ width: { md: "100%" } }}
+            onOpen={getRecipesToSearch}
+            filterOptions={filterOptions}
+          />
 
           <TastesCategories
             style={{
@@ -71,7 +90,9 @@ const MainPage = () => {
               value={dishTemperature}
               setValue={setDishTemperature}
             />
-            <Button>Find&nbsp;recipe</Button>
+            <Link to={"/recipes"}>
+              <Button>Find&nbsp;recipe</Button>
+            </Link>
           </Stack>
         </Stack>
         <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 4 }}>

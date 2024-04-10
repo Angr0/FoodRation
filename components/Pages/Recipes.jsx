@@ -10,7 +10,7 @@ import axios from "axios";
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
-  const [dishTemperature, setDishTemperature] = useState(["hot"]);
+  const [dishTemperature, setDishTemperature] = useState([]);
   const [dishTaste, setDishTaste] = useState([]);
 
   useEffect(() => {
@@ -32,9 +32,34 @@ const Recipes = () => {
       );
     }
   };
+  //TODO filtrowanie chyba trzeba na backend robic
+  const onTasteChange = (categories) => {
+    setDisplayedRecipes((oldRecipes) =>
+      oldRecipes.filter(({ flavours }) => {
+        if (categories === []) return oldRecipes;
+        return flavours.includes(...categories);
+        // console.log(flavours.includes(...categories));
+        // console.log(flavours);
+        // console.log(categories);
+      }),
+    );
+  };
+
+  const onTemperatureChange = (toggleButtonValue) => {
+    if (toggleButtonValue.length === 2) setDisplayedRecipes(recipes);
+    else if (toggleButtonValue.includes("hot"))
+      setDisplayedRecipes((oldRecipes) =>
+        oldRecipes.filter(({ is_warm }) => is_warm),
+      );
+    else if (toggleButtonValue.includes("cold"))
+      setDisplayedRecipes((oldRecipes) =>
+        oldRecipes.filter(({ is_warm }) => !is_warm),
+      );
+    else setDisplayedRecipes(recipes);
+  };
 
   const findRecipes = () => {
-    console.log(dishTemperature, dishTaste);
+    // console.log(dishTemperature, dishTaste);
   };
 
   return (
@@ -43,9 +68,14 @@ const Recipes = () => {
         style={{ display: { xs: "none", md: "block" } }}
         dishTaste={dishTaste}
         setDishTaste={setDishTaste}
+        onTasteChange={onTasteChange}
       />
 
-      <Stack alignItems={"center"} gap={2}>
+      <Stack
+        alignItems={"center"}
+        gap={2}
+        width={{ md: "var(--max-width-main-content)" }}
+      >
         <Stack
           sx={{ width: "100%" }}
           alignItems="center"
@@ -62,17 +92,27 @@ const Recipes = () => {
               flexWrap: "wrap",
               justifyContent: "center",
             }}
+            onTasteChange={onTasteChange}
           />
           <Stack direction="row" justifyContent="center" gap={{ xs: 1, md: 4 }}>
             <TemperatureToggle
               value={dishTemperature}
               setValue={setDishTemperature}
+              onTemperatureChange={onTemperatureChange}
             />
             <Button onClick={findRecipes}>Find&nbsp;recipe</Button>
           </Stack>
         </Stack>
         {displayedRecipes.map(
-          ({ name, is_warm, icon_link, categories, type, ingredients }) => (
+          ({
+            name,
+            is_warm,
+            icon_link,
+            categories,
+            type,
+            ingredients,
+            flavours,
+          }) => (
             <RecipeCard
               key={name}
               name={name}
@@ -81,6 +121,7 @@ const Recipes = () => {
               categories={categories}
               typeName={type}
               ingredients={ingredients}
+              flavours={flavours}
             />
           ),
         )}

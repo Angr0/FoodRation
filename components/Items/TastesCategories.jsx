@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 import axios from "axios";
 
-const TastesCategories = ({ style = {}, value, setValue }) => {
+const TastesCategories = ({
+  style = {},
+  value,
+  setValue,
+  onTasteChange = () => {},
+}) => {
   const [tasteCategories, setTasteCategories] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8000/flavours/").then(({ data }) => {
@@ -16,6 +21,7 @@ const TastesCategories = ({ style = {}, value, setValue }) => {
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
+        onTasteChange(newValue);
       }}
       color="danger"
       sx={{

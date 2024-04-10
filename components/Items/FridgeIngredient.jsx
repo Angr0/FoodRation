@@ -4,7 +4,7 @@ import { CardMedia } from "@mui/material";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 
-const Ingredient = ({
+const FridgeIngredient = ({
   name,
   quantity,
   iconUrl,
@@ -55,4 +55,4 @@ const Ingredient = ({
   );
 };
 
-export default Ingredient;
+export default FridgeIngredient;

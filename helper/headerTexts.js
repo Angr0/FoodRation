@@ -1,13 +1,5 @@
 const navigationTexts = [
   {
-    text: "Log in",
-    link: "",
-  },
-  {
-    text: "Sign up",
-    link: "",
-  },
-  {
     text: "My fridge",
     link: "/fridge",
   },

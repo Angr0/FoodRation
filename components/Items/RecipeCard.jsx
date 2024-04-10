@@ -12,6 +12,7 @@ const RecipeCard = ({
   categories,
   typeName,
   ingredients,
+  flavours,
 }) => {
   return (
     <Link
@@ -66,6 +67,20 @@ const RecipeCard = ({
               <span key={ingredient}>
                 {ingredient}
                 <ComaWithoutLast index={index} length={ingredients.length} />
+              </span>
+            ))}
+          </Stack>
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            gap={1}
+            color={"gray"}
+            sx={{ display: { xs: "none", md: "block" } }}
+          >
+            {flavours.map((flavour, index) => (
+              <span key={flavour}>
+                {flavour}
+                <ComaWithoutLast index={index} length={flavours.length} />
               </span>
             ))}
           </Stack>
