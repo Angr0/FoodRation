@@ -27,6 +27,19 @@ const Recipe = () => {
     });
   }, [recipeUrl]);
 
+  const likeRecipe = (e) => {
+    axios
+      .post("http://localhost:8000/favourite-recipes/Adach/", {
+        name: "jajko",
+      })
+      .then((r) => {
+        console.log(r);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Stack alignItems={"center"} mt={2} mb={2}>
       <Card
@@ -42,7 +55,7 @@ const Recipe = () => {
           </Link>
         </Box>
         <Box sx={{ position: "absolute", top: "1rem", right: "1rem" }}>
-          <FaStar p={2} />
+          <FaStar p={2} onClick={likeRecipe} />
         </Box>
         <CardContent>
           <Stack gap={2}>

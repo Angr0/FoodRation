@@ -5,23 +5,30 @@ import { HiPlus } from "react-icons/hi";
 import axios from "axios";
 import SelectIngredients from "../Items/SelectIngredients.jsx";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 const Fridge = () => {
+  const username = useSelector((state) => state.user.username);
   const [fridgeIngredients, setFridgeIngredients] = useState([]);
   const [currentIngredient, setCurrentIngredient] = useState({});
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/fridge/Adach/").then(({ data }) => {
-      setFridgeIngredients(data);
-    });
-  }, []);
+    axios
+      .get(`http://localhost:8000/fridge/${username}/`)
+      .then(({ data }) => {
+        setFridgeIngredients(data);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  }, [username]);
 
   const addIngredient = ({ quantity }, e) => {
     e.preventDefault();
 
     axios
-      .put("http://localhost:8000/fridge/Adach/", [
+      .put(`http://localhost:8000/fridge/${username}/`, [
         {
           name: currentIngredient?.name,
           quantity: parseInt(quantity),
@@ -30,9 +37,14 @@ const Fridge = () => {
       .then((r) => {
         console.log(r);
 
-        axios.get("http://localhost:8000/fridge/Adach/").then(({ data }) => {
-          setFridgeIngredients(data);
-        });
+        axios
+          .get(`http://localhost:8000/fridge/${username}/`)
+          .then(({ data }) => {
+            setFridgeIngredients(data);
+          });
+      })
+      .catch((errors) => {
+        console.log(errors);
       });
   };
 
@@ -86,26 +98,30 @@ const Fridge = () => {
             </Grid>
           </Grid>
         </form>
-        <Stack
-          direction={"row"}
-          useFlexGap
-          flexWrap={"wrap"}
-          gap={1}
-          justifyContent={"center"}
-        >
-          {fridgeIngredients.map(
-            ({ ingredient_name, quantity, icon_link, unit_name }) => (
-              <FridgeIngredient
-                key={ingredient_name}
-                name={ingredient_name}
-                quantity={quantity}
-                iconUrl={icon_link}
-                unit_name={unit_name}
-                setFridgeIngredients={setFridgeIngredients}
-              />
-            ),
-          )}
-        </Stack>
+        {fridgeIngredients.length === 0 ? (
+          "Your fridge is empty :("
+        ) : (
+          <Stack
+            direction={"row"}
+            useFlexGap
+            flexWrap={"wrap"}
+            gap={1}
+            justifyContent={"center"}
+          >
+            {fridgeIngredients.map(
+              ({ ingredient_name, quantity, icon_link, unit_name }) => (
+                <FridgeIngredient
+                  key={ingredient_name}
+                  name={ingredient_name}
+                  quantity={quantity}
+                  iconUrl={icon_link}
+                  unit_name={unit_name}
+                  setFridgeIngredients={setFridgeIngredients}
+                />
+              ),
+            )}
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );

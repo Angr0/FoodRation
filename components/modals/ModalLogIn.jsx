@@ -10,15 +10,32 @@ import {
 } from "@mui/joy";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { redirect } from "react-router-dom";
+import { setUsername } from "../../redux/userSlice.js";
+import { useDispatch } from "react-redux";
 
-const ModalLogIn = ({ open, setOpen, setUserName }) => {
-  const { register, handleSubmit } = useForm();
+const ModalLogIn = ({ open, setOpen }) => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: { login: "Adach", password: "gruby" },
+  });
 
-  const logIn = (data) => {
-    console.log(data);
-    axios.get("http://localhost:8000/login/", data).then((r) => {
-      console.log(r);
-    });
+  const logIn = (logInData) => {
+    axios
+      .post("http://localhost:8000/login/", logInData)
+      .then(({ data }) => {
+        if (data["password matches"]) {
+          setOpen(false);
+          dispatch(setUsername(logInData.login));
+          reset();
+          return redirect("/recipes");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(logInData);
+        reset();
+      });
   };
 
   return (

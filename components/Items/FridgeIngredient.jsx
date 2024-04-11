@@ -3,6 +3,7 @@ import { Button, Card, Stack } from "@mui/joy";
 import { CardMedia } from "@mui/material";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const FridgeIngredient = ({
   name,
@@ -11,15 +12,19 @@ const FridgeIngredient = ({
   unit_name,
   setFridgeIngredients,
 }) => {
+  const username = useSelector((state) => state.user.username);
+
   const deleteIngredient = () => {
     axios
-      .delete("http://localhost:8000/fridge/Adach/", { data: [name] })
+      .delete(`http://localhost:8000/fridge/${username}/`, { data: [name] })
       .then((r) => {
         console.log(r);
 
-        axios.get("http://localhost:8000/fridge/Adach/").then(({ data }) => {
-          setFridgeIngredients(data);
-        });
+        axios
+          .get(`http://localhost:8000/fridge/${username}/`)
+          .then(({ data }) => {
+            setFridgeIngredients(data);
+          });
       });
   };
 

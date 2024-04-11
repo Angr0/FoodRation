@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, List, ListItem, Stack } from "@mui/joy";
 import SelectIngredients from "../Items/SelectIngredients.jsx";
 import { FaTrashAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const username = useSelector((state) => state.user.username);
   const [currentIngredient, setCurrentIngredient] = useState();
-  const { userNameUrl } = useParams();
   const [userData, setUserData] = useState();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/user-data/${userNameUrl}`)
+      .get(`http://localhost:8000/user-data/${username}`)
       .then(({ data }) => {
         setUserData(data);
       });
-  }, [userNameUrl]);
+  }, [username]);
 
   return (
     <Stack direction={"row"} justifyContent="center" gap={4} mt={2} mb={4}>
@@ -24,7 +24,6 @@ const Profile = () => {
         <Stack direction={"row"} gap={6}>
           <Stack>
             <p>Login: {userData?.login}</p>
-            <p>Password: {userData?.password}</p>
             <p>Sex: {userData?.is_male ? "male" : "female"}</p>
           </Stack>
           <List>
