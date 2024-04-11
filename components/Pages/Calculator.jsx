@@ -1,15 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Stack,
   Button,
   Card,
-  FormControl,
   Input,
   FormLabel,
   Radio,
   RadioGroup,
 } from "@mui/joy";
-import { CardContent } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 const Calculator = () => {
