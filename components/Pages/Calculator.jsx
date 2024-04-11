@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 const Calculator = () => {
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState();
-  const [bmrValue, setBmrValue] = useState();
 
   const calculateBmi = ({ height, weight }) => {
     if (height && weight) {
@@ -33,22 +32,21 @@ const Calculator = () => {
         message = "You are Obese";
       }
 
-      setMessage(`Your BMI: ${bmi} ${message}`);
+      setMessage(`Your BMI: ${Math.round(bmi)} ${message}`);
     } else {
       setMessage("");
     }
   };
-  const calculateBmr = ({ height, weight, male, female, age }) => {
+  const calculateBmr = ({ height, weight, gender, age }) => {
     let bmr;
 
-    if (male) {
+    if (gender === "male") {
       bmr = 13.397 * weight + 4.799 * height - 5.677 * age + 88.362;
     }
-    if (female) {
+    if (gender === "female") {
       bmr = 9.247 * weight + 3.098 * height - 4.33 * age + 447.593;
     }
-    setMessage(`Your BMR: ${bmr}`);
-    console.log(bmr);
+    setMessage(`Your BMR: ${Math.round(bmr)}`);
   };
 
   return (
@@ -69,7 +67,7 @@ const Calculator = () => {
           <Stack gap={1.5}>
             <FormLabel>Gender</FormLabel>
             <RadioGroup
-              defaultValue="male"
+              defaultValue={"male"}
               name="radio-buttons-group"
               color="primary"
             >
@@ -77,13 +75,13 @@ const Calculator = () => {
                 value="male"
                 label="Male"
                 variant="solid"
-                {...register("male")}
+                {...register("gender")}
               />
               <Radio
                 value="female"
                 label="Female"
                 variant="solid"
-                {...register("female")}
+                {...register("gender")}
               />
             </RadioGroup>
 
