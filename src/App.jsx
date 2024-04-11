@@ -9,6 +9,7 @@ import Fridge from "../components/Pages/Fridge.jsx";
 import Profile from "../components/Pages/Profile.jsx";
 import { store } from "../redux/store.js";
 import { saveState } from "./localStorage.js";
+import Calculator from "../components/Pages/Calculator.jsx";
 
 function App() {
   store.subscribe(() => {
@@ -40,7 +41,7 @@ function App() {
             }}
           />
 
-          <Route path="calculator" element={<div>calculator</div>} />
+          <Route path="calculator" element={<Calculator />} />
           <Route path="shopping_list" element={<div>shopping_list</div>} />
           <Route path="cooking_history" element={<div>cooking_history</div>} />
           <Route path="fridge" element={<Fridge />} />
