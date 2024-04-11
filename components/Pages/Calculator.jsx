@@ -18,7 +18,7 @@ const Calculator = () => {
     if (height && weight) {
       const heightInMeters = height / 100;
       const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
-      let message = "";
+      let message;
 
       if (bmi < 18.5) {
         message = "You are underweight";
@@ -30,7 +30,7 @@ const Calculator = () => {
         message = "You are Obese";
       }
 
-      setMessage(`Your BMI: ${Math.round(bmi)} ${message}`);
+      setMessage(`Your BMI: ${Math.round(bmi)}, ${message}`);
     } else {
       setMessage("");
     }
