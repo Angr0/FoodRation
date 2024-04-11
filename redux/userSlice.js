@@ -5,7 +5,7 @@ const persistedState = loadState();
 console.log(persistedState);
 
 const initialState = {
-  username: persistedState.username,
+  username: persistedState?.username,
 };
 
 const userSlice = createSlice({

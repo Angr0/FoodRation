@@ -68,6 +68,8 @@ const MainPage = () => {
           direction={{ xs: "column", md: "row" }}
         >
           <Autocomplete
+            variant="outlined"
+            color="primary"
             options={autocompleteOptions}
             getOptionLabel={(option) => option.name}
             type={"search"}
@@ -91,7 +93,7 @@ const MainPage = () => {
               setValue={setDishTemperature}
             />
             <Link to={"/recipes"}>
-              <Button>Find&nbsp;recipe</Button>
+              <Button color="danger">Find&nbsp;recipe</Button>
             </Link>
           </Stack>
         </Stack>

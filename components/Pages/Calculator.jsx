@@ -56,8 +56,8 @@ const Calculator = () => {
       mt={2}
       mb={4}
     >
-      <Card sx={{ maxWidth: 600, width: "100%", paddingX: { xs: 2, sm: 10 } }}>
-        <Stack alignItems="center" fontSize={25}>
+      <Card color="danger" sx={{ maxWidth: 600, width: "100%", paddingX: { xs: 2, sm: 10 } }}>
+        <Stack color={"black"} alignItems="center" fontSize={25}>
           Check your BMI/BMR
         </Stack>
 
@@ -84,13 +84,13 @@ const Calculator = () => {
             </RadioGroup>
 
             <FormLabel>Height (cm)</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("height")} />
+            <Input  placeholder="0" type={"number"} {...register("height")} color="primary" />
 
             <FormLabel>Weight (kg)</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("weight")} />
+            <Input placeholder="0" type={"number"} {...register("weight")} color="primary"/>
 
             <FormLabel>Age</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("age")} />
+            <Input placeholder="0" type={"number"} {...register("age")} color="primary" />
 
             <Stack direction="row" gap={2}>
               <Button
@@ -118,7 +118,7 @@ const Calculator = () => {
           </Stack>
         </form>
         {
-          <Stack fontSize={20} alignItems="center">
+          <Stack fontSize={20} alignItems="center" color={"var(--joy-palette-primary-900)"}>
             {message}
           </Stack>
         }

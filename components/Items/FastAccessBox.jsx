@@ -8,8 +8,7 @@ const FastAccessBox = ({ icon, title, text, big = false }) => {
 
   return (
     <Card
-      color="danger"
-      variant="soft"
+      color="primary"
       sx={{
         maxWidth: { xs: defaultSize, sm: size },
         boxShadow: "0px 0px 24px -6px rgba(66, 68, 90, 1)",

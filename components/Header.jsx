@@ -50,7 +50,7 @@ const Header = () => {
               <>
                 <Link to={`/`}>
                   <ListItem>
-                    <Button color="danger" onClick={logOut}>
+                    <Button color="var(--joy-palette-primary-900)" onClick={logOut}>
                       Log out
                     </Button>
                   </ListItem>
@@ -68,7 +68,7 @@ const Header = () => {
                 <ListItem>
                   <Button
                     variant={"outlined"}
-                    color="danger"
+                    color="primary"
                     onClick={() => {
                       setOpenLogInModal(true);
                     }}
@@ -78,8 +78,8 @@ const Header = () => {
                 </ListItem>
                 <ListItem>
                   <Button
-                    variant={"soft"}
-                    color="danger"
+                    
+                    color="primary"
                     onClick={() => {
                       setOpenSignUpModal(true);
                     }}
@@ -96,7 +96,7 @@ const Header = () => {
                   return (
                     <Link to={link} key={text}>
                       <ListItem>
-                        <Button variant={"plain"} color="danger">
+                        <Button variant={"plain"} color="primary">
                           {text}
                         </Button>
                       </ListItem>
@@ -107,7 +107,7 @@ const Header = () => {
               return (
                 <Link to={link} key={text}>
                   <ListItem>
-                    <Button variant={"plain"} color="danger">
+                    <Button variant={"plain"} color="primary">
                       {text}
                     </Button>
                   </ListItem>
