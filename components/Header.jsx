@@ -16,6 +16,7 @@ const Header = () => {
   const [openLogInModal, setOpenLogInModal] = useState(false);
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const username = useSelector((state) => state.user.username);
+
   const logOut = () => {
     dispatch(setUsername(""));
   };
@@ -120,6 +121,7 @@ const Header = () => {
             setOpenMobileMenu={setOpenMobileMenu}
             setOpenLogInModal={setOpenLogInModal}
             setOpenSignUpModal={setOpenSignUpModal}
+            logOut={logOut}
           />
         </Box>
       </Box>

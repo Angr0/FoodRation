@@ -10,6 +10,8 @@ import Profile from "../components/Pages/Profile.jsx";
 import { store } from "../redux/store.js";
 import { saveState } from "./localStorage.js";
 import Calculator from "../components/Pages/Calculator.jsx";
+import Favourites from "../components/Pages/Favourites.jsx";
+import Menu from "../components/Pages/Menu.jsx";
 
 function App() {
   store.subscribe(() => {
@@ -32,7 +34,9 @@ function App() {
         <Routes>
           <Route index element={<MainPage />} />
 
-          <Route path="recipes" element={<Recipes />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="favourites" element={<Favourites />} />
+          <Route path="public_recipes" element={<Recipes />} />
           <Route
             path="recipe/:recipeUrl"
             element={<Recipe />}
@@ -42,7 +46,6 @@ function App() {
           />
 
           <Route path="calculator" element={<Calculator />} />
-          <Route path="shopping_list" element={<div>shopping_list</div>} />
           <Route path="cooking_history" element={<div>cooking_history</div>} />
           <Route path="fridge" element={<Fridge />} />
 

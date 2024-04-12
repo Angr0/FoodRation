@@ -60,17 +60,16 @@ const Fridge = () => {
         <form onSubmit={handleSubmit(addIngredient)} style={{ width: "100%" }}>
           <Grid
             container
-            direction={{ xs: "column", sm: "row" }}
             width={"100%"}
             gap={2}
             justifyContent={"center"}
             alignItems={"center"}
           >
-            <Grid xs={5}>
+            <Grid xs={12} sm={5}>
               <SelectIngredients setCurrentIngredient={setCurrentIngredient} />
             </Grid>
 
-            <Grid xs={2}>
+            <Grid xs={2} sm={2}>
               <Input
                 type="number"
                 defaultValue={1}
@@ -84,11 +83,11 @@ const Fridge = () => {
               />
             </Grid>
 
-            <Grid xs={2}>
+            <Grid xs={2} md={3}>
               <span>{currentIngredient.unit_name}</span>
             </Grid>
 
-            <Grid xs={1}>
+            <Grid xs={1} md={1}>
               <Button
                 type={"submit"}
                 disabled={Object.keys(currentIngredient).length === 0}

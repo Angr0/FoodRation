@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Stack,
   Button,
@@ -9,10 +9,30 @@ import {
   RadioGroup,
 } from "@mui/joy";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { FormControlLabel } from "@mui/material";
 
 const Calculator = () => {
-  const { register, handleSubmit } = useForm();
-  const [message, setMessage] = useState();
+  const username = useSelector((state) => state.user.username);
+  const { register, handleSubmit, setValue } = useForm();
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!username) return;
+    axios
+      .get(`http://localhost:8000/bio-calc/${username}/`)
+      .then(({ data: { height, weight, age, is_male } }) => {
+        setValue("height", height);
+        setValue("weight", weight);
+        setValue("age", age);
+        // setValue("gender", is_male ? "male" : "female");
+        setValue("gender", "female");
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  }, [username, setValue]);
 
   const calculateBmi = ({ height, weight }) => {
     if (height && weight) {
@@ -30,7 +50,7 @@ const Calculator = () => {
         message = "You are Obese";
       }
 
-      setMessage(`Your BMI: ${Math.round(bmi)}, ${message}`);
+      setMessage(`Your BMI: ${Math.round(parseFloat(bmi))}, ${message}`);
     } else {
       setMessage("");
     }
@@ -64,21 +84,21 @@ const Calculator = () => {
         <form onSubmit={handleSubmit(calculateBmi)}>
           <Stack gap={1.5}>
             <FormLabel>Gender</FormLabel>
+            <RadioGroup name="gender" color="primary"></RadioGroup>
             <RadioGroup
-              defaultValue={"male"}
-              name="radio-buttons-group"
-              color="primary"
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="gender"
             >
-              <Radio
-                value="male"
-                label="Male"
-                variant="solid"
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
                 {...register("gender")}
               />
-              <Radio
-                value="female"
-                label="Female"
-                variant="solid"
+              <FormControlLabel
+                value="male"
+                control={<Radio />}
+                label="Male"
                 {...register("gender")}
               />
             </RadioGroup>
@@ -117,11 +137,9 @@ const Calculator = () => {
             </Stack>
           </Stack>
         </form>
-        {
-          <Stack fontSize={20} alignItems="center">
-            {message}
-          </Stack>
-        }
+        <Stack fontSize={20} alignItems="center">
+          {message}
+        </Stack>
       </Card>
     </Stack>
   );

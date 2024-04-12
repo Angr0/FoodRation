@@ -28,7 +28,7 @@ const ModalLogIn = ({ open, setOpen }) => {
           setOpen(false);
           dispatch(setUsername(logInData.login));
           reset();
-          return redirect("/recipes");
+          return redirect("/public_recipes");
         }
       })
       .catch((err) => {

@@ -103,28 +103,30 @@ const Recipes = () => {
             <Button onClick={findRecipes}>Find&nbsp;recipe</Button>
           </Stack>
         </Stack>
-        {displayedRecipes.map(
-          ({
-            name,
-            is_warm,
-            icon_link,
-            categories,
-            type,
-            ingredients,
-            flavours,
-          }) => (
-            <RecipeCard
-              key={name}
-              name={name}
-              isWarm={is_warm}
-              iconUrl={icon_link}
-              categories={categories}
-              typeName={type}
-              ingredients={ingredients}
-              flavours={flavours}
-            />
-          ),
-        )}
+        {displayedRecipes.length === 0
+          ? "There is no recipes :("
+          : displayedRecipes.map(
+              ({
+                name,
+                is_warm,
+                icon_link,
+                categories,
+                type,
+                ingredients,
+                flavours,
+              }) => (
+                <RecipeCard
+                  key={name}
+                  name={name}
+                  isWarm={is_warm}
+                  iconUrl={icon_link}
+                  categories={categories}
+                  typeName={type}
+                  ingredients={ingredients}
+                  flavours={flavours}
+                />
+              ),
+            )}
       </Stack>
     </Stack>
   );

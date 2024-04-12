@@ -57,7 +57,7 @@ const ModalSignUp = ({ open, setOpen }) => {
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
-      <ModalDialog>
+      <ModalDialog sx={{ maxHeight: "95%", overflowY: "scroll" }}>
         <form onSubmit={handleSubmit(signUp)}>
           <Stack gap={2}>
             <FormControl>
@@ -65,7 +65,7 @@ const ModalSignUp = ({ open, setOpen }) => {
               <Input {...register("login", { required: true })} />
             </FormControl>
             <FormControl>
-              <FormLabel sx={{ color: !samePasswords && "red" }}>
+              <FormLabel sx={{ color: !samePasswords ? "red" : "" }}>
                 Password
               </FormLabel>
               <Input
@@ -74,7 +74,7 @@ const ModalSignUp = ({ open, setOpen }) => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel sx={{ color: !samePasswords && "red" }}>
+              <FormLabel sx={{ color: !samePasswords ? "red" : "" }}>
                 Repeat password
               </FormLabel>
               <Input

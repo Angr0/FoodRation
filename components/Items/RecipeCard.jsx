@@ -36,7 +36,7 @@ const RecipeCard = ({
             width: { xs: 100, md: 140 },
             backgroundColor: "lightgreen",
           }}
-          image={iconUrl}
+          src={iconUrl}
           title={name}
         />
         <CardContent>
@@ -46,7 +46,7 @@ const RecipeCard = ({
               {isWarm ? <FaMugHot /> : <FaRegSnowflake />}
             </span>
           </Stack>
-          <Stack direction={"row"} alignItems={"center"} gap={1}>
+          <Stack direction={"row"} alignItems={"center"} gap={0.5}>
             {typeName},
             {categories.map((category, index) => (
               <span key={category}>

@@ -10,18 +10,23 @@ const navigationTexts = [
     needsToBeLoggedIn: true,
   },
   {
-    text: "Shopping list",
-    link: "/shopping_list",
-    needsToBeLoggedIn: true,
-  },
-  {
     text: "Calculator",
     link: "/calculator",
     needsToBeLoggedIn: false,
   },
   {
+    text: "Menu",
+    link: "/menu",
+    needsToBeLoggedIn: false,
+  },
+  {
+    text: "Favourites",
+    link: "/favourites",
+    needsToBeLoggedIn: false,
+  },
+  {
     text: "Recipes",
-    link: "/recipes",
+    link: "/public_recipes",
     needsToBeLoggedIn: false,
   },
 ];

@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
 import CelebrationIcon from "@mui/icons-material/Celebration.js";
-import { Autocomplete, Button, Stack } from "@mui/joy";
+import {
+  Autocomplete,
+  AutocompleteOption,
+  Button,
+  Stack,
+  TextField,
+} from "@mui/joy";
 import Sidebar from "../Items/Sidebar.jsx";
 import TastesCategories from "../Items/TastesCategories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
 
@@ -35,10 +41,11 @@ const MainPage = () => {
 
   const [dishTemperature, setDishTemperature] = useState(["hot"]);
   const [dishTaste, setDishTaste] = useState([]);
-  const [autocompleteOptions, setAutocompleteOptions] = useState([]);
+  const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
 
   function getRecipesToSearch() {
-    axios.get("http://localhost:8000/search-data").then(({ data }) => {
+    axios.get("http://localhost:8000/search-data/").then(({ data }) => {
+      console.log(data);
       setAutocompleteOptions(data);
     });
   }
@@ -53,7 +60,6 @@ const MainPage = () => {
         dishTaste={dishTaste}
         setDishTaste={setDishTaste}
       />
-
       <Stack
         alignItems="center"
         spacing={{ xs: 1, sm: 4 }}
@@ -68,9 +74,16 @@ const MainPage = () => {
           direction={{ xs: "column", md: "row" }}
         >
           <Autocomplete
-            options={autocompleteOptions}
+            placeholder={"Recipes..."}
+            options={autoCompleteOptions}
             getOptionLabel={(option) => option.name}
-            type={"search"}
+            renderOption={(props, option) => (
+              <Link to={`/recipe/${option.name}`} key={option.name}>
+                <AutocompleteOption {...props}>
+                  {option.name}
+                </AutocompleteOption>
+              </Link>
+            )}
             sx={{ width: { md: "100%" } }}
             onOpen={getRecipesToSearch}
             filterOptions={filterOptions}
@@ -90,7 +103,7 @@ const MainPage = () => {
               value={dishTemperature}
               setValue={setDishTemperature}
             />
-            <Link to={"/recipes"}>
+            <Link to={"/public_recipes"}>
               <Button>Find&nbsp;recipe</Button>
             </Link>
           </Stack>
@@ -113,6 +126,7 @@ const MainPage = () => {
               ))}
           </Stack>
           <FastAccessBox
+            color={"danger"}
             icon={content[content.length - 1].icon}
             title={content[content.length - 1].title}
             text={content[content.length - 1].text}

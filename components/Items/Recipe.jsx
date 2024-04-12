@@ -50,7 +50,7 @@ const Recipe = () => {
         }}
       >
         <Box sx={{ position: "absolute", top: "1rem", left: "1rem" }}>
-          <Link to={"/recipes"}>
+          <Link to={"/public_recipes"}>
             <FaX p={2} />
           </Link>
         </Box>

@@ -38,3 +38,25 @@ a {
     width: 100%;
     max-width: 1250px;
 }
+
+::-webkit-scrollbar {
+    width: .5rem;
+    height: .5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--joy-palette-neutral-50);
+    border-radius: 25px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--joy-palette-primary-50);
+    border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--joy-palette-primary-200);
+}
