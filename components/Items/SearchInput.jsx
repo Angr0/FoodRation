@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const SearchInput = ({ onChange = (e) => {} }) => {
   return (
     <Input
-      variant="soft"
+      variant="outlined"
       sx={{ width: { md: "100%" } }}
       startDecorator={<SearchIcon />}
       onChange={onChange}

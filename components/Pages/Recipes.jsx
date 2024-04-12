@@ -100,7 +100,9 @@ const Recipes = () => {
               setValue={setDishTemperature}
               onTemperatureChange={onTemperatureChange}
             />
-            <Button onClick={findRecipes}>Find&nbsp;recipe</Button>
+            <Button color={"danger"} onClick={findRecipes}>
+              Find&nbsp;recipe
+            </Button>
           </Stack>
         </Stack>
         {displayedRecipes.length === 0

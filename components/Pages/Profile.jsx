@@ -139,7 +139,9 @@ const Profile = () => {
               <BioChangeInput label={"Height"} register={register} />
               <BioChangeInput label={"Weight"} register={register} />
               <BioChangeInput label={"Age"} register={register} />
-              <Button type={"submit"}>Save</Button>
+              <Button color={"danger"} type={"submit"}>
+                Save
+              </Button>
             </Stack>
           </form>
           <Divider />
@@ -147,7 +149,12 @@ const Profile = () => {
             <Stack gap={1}>
               <FormControl>
                 <FormLabel>New password</FormLabel>
-                <Input required type={"password"} {...register("password")} />
+                <Input
+                  required
+                  type={"password"}
+                  {...register("password")}
+                  color={"primary"}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Repeat new password</FormLabel>
@@ -155,9 +162,12 @@ const Profile = () => {
                   required
                   type={"password"}
                   {...register("newPassword")}
+                  color={"primary"}
                 />
               </FormControl>
-              <Button type={"submit"}>Save</Button>
+              <Button color={"danger"} type={"submit"}>
+                Save
+              </Button>
               <span style={{ color: "lightcoral" }}>{errorMessage}</span>
             </Stack>
           </form>
@@ -165,6 +175,7 @@ const Profile = () => {
         <List>
           <Stack gap={1} alignItems={"center"}>
             <Select
+              color={"danger"}
               placeholder="Ingredients"
               sx={{ minWidth: "12rem", maxWidth: "24rem" }}
             >

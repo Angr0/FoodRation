@@ -2,18 +2,12 @@ import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
 import CelebrationIcon from "@mui/icons-material/Celebration.js";
-import {
-  Autocomplete,
-  AutocompleteOption,
-  Button,
-  Stack,
-  TextField,
-} from "@mui/joy";
+import { Autocomplete, AutocompleteOption, Button, Stack } from "@mui/joy";
 import Sidebar from "../Items/Sidebar.jsx";
 import TastesCategories from "../Items/TastesCategories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
 
@@ -74,6 +68,8 @@ const MainPage = () => {
           direction={{ xs: "column", md: "row" }}
         >
           <Autocomplete
+            variant="outlined"
+            color="primary"
             placeholder={"Recipes..."}
             options={autoCompleteOptions}
             getOptionLabel={(option) => option.name}
@@ -104,7 +100,7 @@ const MainPage = () => {
               setValue={setDishTemperature}
             />
             <Link to={"/public_recipes"}>
-              <Button>Find&nbsp;recipe</Button>
+              <Button color="danger">Find&nbsp;recipe</Button>
             </Link>
           </Stack>
         </Stack>
@@ -126,7 +122,8 @@ const MainPage = () => {
               ))}
           </Stack>
           <FastAccessBox
-            color={"danger"}
+            color={"primary"}
+            variant={"solid"}
             icon={content[content.length - 1].icon}
             title={content[content.length - 1].title}
             text={content[content.length - 1].text}

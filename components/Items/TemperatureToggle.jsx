@@ -8,12 +8,14 @@ const TemperatureToggle = ({
 }) => {
   return (
     <ToggleButtonGroup
+      
+      color="danger"
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
         onTemperatureChange(newValue);
       }}
-      color="primary"
+      
     >
       <Button value={"hot"}>Hot</Button>
       <Button value={"cold"}>Cold</Button>

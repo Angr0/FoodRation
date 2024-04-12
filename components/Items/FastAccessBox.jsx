@@ -7,6 +7,7 @@ const FastAccessBox = ({
   title,
   text,
   color = "neutral",
+  variant = "soft",
   big = false,
 }) => {
   const defaultSize = "18rem";
@@ -17,7 +18,7 @@ const FastAccessBox = ({
     <Link to={"/public_recipes"}>
       <Card
         color={color}
-        variant="soft"
+        variant={variant}
         sx={{
           maxWidth: { xs: defaultSize, sm: size },
           boxShadow: "0px 0px 24px -6px rgba(66, 68, 90, 1)",

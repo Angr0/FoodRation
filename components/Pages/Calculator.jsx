@@ -11,7 +11,6 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { FormControlLabel } from "@mui/material";
 
 const Calculator = () => {
   const username = useSelector((state) => state.user.username);
@@ -76,8 +75,11 @@ const Calculator = () => {
       mt={2}
       mb={4}
     >
-      <Card sx={{ maxWidth: 600, width: "100%", paddingX: { xs: 2, sm: 10 } }}>
-        <Stack alignItems="center" fontSize={25}>
+      <Card
+        color="danger"
+        sx={{ maxWidth: 600, width: "100%", paddingX: { xs: 2, sm: 10 } }}
+      >
+        <Stack color={"black"} alignItems="center" fontSize={25}>
           Check your BMI/BMR
         </Stack>
 
@@ -88,36 +90,52 @@ const Calculator = () => {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="gender"
+              defaultValue={"male"}
             >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
+              <Radio
+                value={"male"}
+                label={"Male"}
+                color={"danger"}
                 {...register("gender")}
               />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label="Male"
+              <Radio
+                value={"female"}
+                label={"Female"}
+                color={"danger"}
                 {...register("gender")}
               />
             </RadioGroup>
 
             <FormLabel>Height (cm)</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("height")} />
+            <Input
+              placeholder="0"
+              type={"number"}
+              {...register("height")}
+              color="danger"
+            />
 
             <FormLabel>Weight (kg)</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("weight")} />
+            <Input
+              placeholder="0"
+              type={"number"}
+              {...register("weight")}
+              color="danger"
+            />
 
             <FormLabel>Age</FormLabel>
-            <Input placeholder="0" type={"number"} {...register("age")} />
+            <Input
+              placeholder="0"
+              type={"number"}
+              {...register("age")}
+              color="danger"
+            />
 
             <Stack direction="row" gap={2}>
               <Button
                 type="submit"
                 variant="solid"
                 size="md"
-                color="primary"
+                color="danger"
                 sx={{ ml: "auto", fontWeight: 600 }}
                 fullWidth={true}
               >
@@ -127,7 +145,7 @@ const Calculator = () => {
               <Button
                 variant="solid"
                 size="md"
-                color="primary"
+                color="danger"
                 sx={{ ml: "auto", fontWeight: 600 }}
                 fullWidth={true}
                 onClick={handleSubmit(calculateBmr)}

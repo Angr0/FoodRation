@@ -20,6 +20,10 @@
     box-sizing: border-box;
 }
 
+body{
+  background-color: var(--joy-palette-neutral-500);
+}
+
 a {
     text-decoration: none;
 }

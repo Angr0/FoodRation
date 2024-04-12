@@ -17,12 +17,12 @@ const navigationTexts = [
   {
     text: "Menu",
     link: "/menu",
-    needsToBeLoggedIn: false,
+    needsToBeLoggedIn: true,
   },
   {
     text: "Favourites",
     link: "/favourites",
-    needsToBeLoggedIn: false,
+    needsToBeLoggedIn: true,
   },
   {
     text: "Recipes",
