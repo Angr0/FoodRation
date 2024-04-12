@@ -63,7 +63,7 @@ const Calculator = () => {
     if (gender === "female") {
       bmr = 9.247 * weight + 3.098 * height - 4.33 * age + 447.593;
     }
-    setMessage(`Your BMR: ${Math.round(bmr)}`);
+    setMessage(`Your BMR: ${Math.round(bmr)} kcal`);
   };
 
   return (

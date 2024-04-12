@@ -45,7 +45,6 @@ const MobileMenu = ({
                 <Link to={`/`}>
                   <ListItem>
                     <Button
-                      color="danger"
                       onClick={() => {
                         logOut();
                         closeModal();
@@ -57,11 +56,7 @@ const MobileMenu = ({
                 </Link>
                 <Link to={`/${username}`}>
                   <ListItem>
-                    <Button
-                      variant={"outlined"}
-                      color="danger"
-                      onClick={closeModal}
-                    >
+                    <Button variant={"outlined"} onClick={closeModal}>
                       My account
                     </Button>
                   </ListItem>
@@ -72,7 +67,6 @@ const MobileMenu = ({
                 <ListItem>
                   <Button
                     variant={"outlined"}
-                    color="danger"
                     onClick={() => {
                       setOpenLogInModal(true);
                       closeModal();
@@ -84,7 +78,6 @@ const MobileMenu = ({
                 <ListItem>
                   <Button
                     variant={"soft"}
-                    color="danger"
                     onClick={() => {
                       setOpenSignUpModal(true);
                       closeModal();

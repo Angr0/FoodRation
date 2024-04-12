@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Button, ToggleButtonGroup } from "@mui/joy";
 import axios from "axios";
 
-const TastesCategories = ({
+const Flavours = ({
   style = {},
   value,
   setValue,
-  onTasteChange = () => {},
+  onFlavourChange = () => {},
 }) => {
-  const [tasteCategories, setTasteCategories] = useState([]);
+  const [flavours, setFlavours] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8000/flavours/").then(({ data }) => {
-      setTasteCategories(data);
+      setFlavours(data);
     });
   }, []);
 
@@ -21,14 +21,14 @@ const TastesCategories = ({
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
-        onTasteChange(newValue);
+        onFlavourChange(newValue);
       }}
       color="danger"
       sx={{
         ...style,
       }}
     >
-      {tasteCategories?.map((taste) => (
+      {flavours?.map((taste) => (
         <Button key={taste} value={taste} sx={{ padding: "0 1rem" }}>
           {taste}
         </Button>
@@ -37,4 +37,4 @@ const TastesCategories = ({
   );
 };
 
-export default TastesCategories;
+export default Flavours;

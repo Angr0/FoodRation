@@ -45,11 +45,16 @@ const ModalLogIn = ({ open, setOpen }) => {
           <ModalClose />
           <FormControl>
             <FormLabel>Login</FormLabel>
-            <Input color="primary" required {...register("login")} />
+            <Input color="danger" required {...register("login")} />
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>
-            <Input color="primary" required type={"password"} {...register("password")} />
+            <Input
+              color="danger"
+              required
+              type={"password"}
+              {...register("password")}
+            />
           </FormControl>
           <Button type={"submit"}>Log in</Button>
         </ModalDialog>

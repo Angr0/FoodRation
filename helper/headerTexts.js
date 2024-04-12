@@ -20,11 +20,6 @@ const navigationTexts = [
     needsToBeLoggedIn: true,
   },
   {
-    text: "Favourites",
-    link: "/favourites",
-    needsToBeLoggedIn: true,
-  },
-  {
     text: "Recipes",
     link: "/public_recipes",
     needsToBeLoggedIn: false,

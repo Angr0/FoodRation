@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
-import CelebrationIcon from "@mui/icons-material/Celebration.js";
-import { Autocomplete, AutocompleteOption, Button, Stack } from "@mui/joy";
-import Sidebar from "../Items/Sidebar.jsx";
-import TastesCategories from "../Items/TastesCategories.jsx";
-import TemperatureToggle from "../Items/TemperatureToggle.jsx";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Autocomplete, AutocompleteOption, Stack } from "@mui/joy";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -26,20 +23,17 @@ const MainPage = () => {
       big: false,
     },
     {
-      icon: <CelebrationIcon sx={{ fontSize: "5rem" }} />,
-      title: "Party set",
-      text: "Make your party unforgettable with our creative and delicious party sets.",
+      icon: <FavoriteBorderIcon sx={{ fontSize: "5rem" }} />,
+      title: "Favourites",
+      text: "Treat yourself to tantalizing flavors with our limited-time offer!",
       big: true,
     },
   ];
 
-  const [dishTemperature, setDishTemperature] = useState(["hot"]);
-  const [dishTaste, setDishTaste] = useState([]);
   const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
 
   function getRecipesToSearch() {
     axios.get("http://localhost:8000/search-data/").then(({ data }) => {
-      console.log(data);
       setAutocompleteOptions(data);
     });
   }
@@ -49,65 +43,35 @@ const MainPage = () => {
 
   return (
     <Stack direction="row" justifyContent="center" gap={4} mt={2} mb={4}>
-      <Sidebar
-        style={{ display: { xs: "none", md: "block" } }}
-        dishTaste={dishTaste}
-        setDishTaste={setDishTaste}
-      />
       <Stack
         alignItems="center"
-        spacing={{ xs: 1, sm: 4 }}
+        spacing={2}
         sx={{
           width: { xs: "100%", md: "var(--max-width-main-content)" },
         }}
       >
-        <Stack
-          sx={{ width: "100%" }}
-          alignItems="center"
-          spacing={{ xs: 1, md: 4 }}
-          direction={{ xs: "column", md: "row" }}
-        >
-          <Autocomplete
-            variant="outlined"
-            color="primary"
-            placeholder={"Recipes..."}
-            options={autoCompleteOptions}
-            getOptionLabel={(option) => option.name}
-            renderOption={(props, option) => (
-              <Link to={`/recipe/${option.name}`} key={option.name}>
-                <AutocompleteOption {...props}>
-                  {option.name}
-                </AutocompleteOption>
-              </Link>
-            )}
-            sx={{ width: { md: "100%" } }}
-            onOpen={getRecipesToSearch}
-            filterOptions={filterOptions}
-          />
-
-          <TastesCategories
-            style={{
-              display: { sx: "block", md: "none" },
-              overflowX: "scroll",
-              maxWidth: "100%",
-            }}
-            value={dishTaste}
-            setValue={setDishTaste}
-          />
-          <Stack direction="row" justifyContent="center" gap={{ xs: 1, md: 4 }}>
-            <TemperatureToggle
-              value={dishTemperature}
-              setValue={setDishTemperature}
-            />
-            <Link to={"/public_recipes"}>
-              <Button color="danger">Find&nbsp;recipe</Button>
+        <Autocomplete
+          variant="outlined"
+          color="primary"
+          placeholder={"Recipes..."}
+          options={autoCompleteOptions}
+          getOptionLabel={(option) => option.name}
+          renderOption={(props, option) => (
+            <Link to={`/recipe/${option.name}`} key={option.name}>
+              <AutocompleteOption {...props}>{option.name}</AutocompleteOption>
             </Link>
-          </Stack>
-        </Stack>
-        <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 4 }}>
+          )}
+          sx={{
+            width: "100%",
+            maxWidth: "var(--max-width-mobile-content)",
+          }}
+          onOpen={getRecipesToSearch}
+          filterOptions={filterOptions}
+        />
+        <Stack direction={{ xs: "column" }} spacing={{ xs: 2, md: 3 }}>
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 1, sm: 4 }}
+            spacing={{ xs: 2, md: 3 }}
           >
             {content
               .slice(0, content.length - 1)
@@ -124,6 +88,7 @@ const MainPage = () => {
           <FastAccessBox
             color={"primary"}
             variant={"solid"}
+            link={"/favourites"}
             icon={content[content.length - 1].icon}
             title={content[content.length - 1].title}
             text={content[content.length - 1].text}

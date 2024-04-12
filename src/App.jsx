@@ -3,20 +3,19 @@ import { Route, Routes } from "react-router-dom";
 import MainPage from "../components/Pages/MainPage.jsx";
 import Header from "../components/Header.jsx";
 import React from "react";
-import Recipes from "../components/Pages/Recipes.jsx";
 import Recipe from "../components/Items/Recipe.jsx";
 import Fridge from "../components/Pages/Fridge.jsx";
 import Profile from "../components/Pages/Profile.jsx";
 import { store } from "../redux/store.js";
 import { saveState } from "./localStorage.js";
 import Calculator from "../components/Pages/Calculator.jsx";
-import Favourites from "../components/Pages/Favourites.jsx";
-import Menu from "../components/Pages/Menu.jsx";
+import RecipesWithCategories from "../components/Pages/RecipesWithCategories.jsx";
 
 function App() {
+  const username = store.getState().user.username;
   store.subscribe(() => {
     saveState({
-      username: store.getState().user.username,
+      username: username,
     });
   });
 
@@ -34,9 +33,28 @@ function App() {
         <Routes>
           <Route index element={<MainPage />} />
 
-          <Route path="menu" element={<Menu />} />
-          <Route path="favourites" element={<Favourites />} />
-          <Route path="public_recipes" element={<Recipes />} />
+          <Route
+            path="menu"
+            element={
+              <RecipesWithCategories
+                link={`http://localhost:8000/filtered-recipes/${username}/`}
+              />
+            }
+          />
+          <Route
+            path="favourites"
+            element={
+              <RecipesWithCategories
+                link={`http://localhost:8000/favourite-recipes/${username}/`}
+              />
+            }
+          />
+          <Route
+            path="public_recipes"
+            element={
+              <RecipesWithCategories link={"http://localhost:8000/recipes/"} />
+            }
+          />
           <Route
             path="recipe/:recipeUrl"
             element={<Recipe />}

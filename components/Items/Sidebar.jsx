@@ -1,23 +1,47 @@
 import React from "react";
-import { Divider, Stack } from "@mui/joy";
-import TastesCategories from "./TastesCategories.jsx";
+import { Button, Stack } from "@mui/joy";
+import Flavours from "./Flavours.jsx";
+import Categories from "./Categories.jsx";
+import TemperatureToggle from "./TemperatureToggle.jsx";
 
 const Sidebar = ({
   style,
-  dishTaste,
-  setDishTaste,
-  onTasteChange = () => {},
+  dishFlavour,
+  setDishFlavour,
+  dishCategory,
+  setDishCategory,
+  dishTemperature,
+  setDishTemperature,
+  onTemperatureChange,
+  onFlavourChange,
 }) => {
   return (
     <Stack sx={{ ...style, maxWidth: "14rem" }} spacing={1}>
-      <h2>Categories</h2>
-      <TastesCategories
-        style={{ display: "flex", flexWrap: "wrap" }}
-        value={dishTaste}
-        setValue={setDishTaste}
-        onTasteChange={onTasteChange}
+      <h2>Temperatures</h2>
+      <TemperatureToggle
+        value={dishTemperature}
+        setValue={setDishTemperature}
+        onTemperatureChange={onTemperatureChange}
       />
-      <Divider orientation="horizontal" />
+
+      <h2>Categories</h2>
+      <Categories value={dishCategory} setValue={setDishCategory} />
+
+      <h2>Flavours</h2>
+      <Flavours
+        style={{ display: "flex", flexWrap: "wrap" }}
+        value={dishFlavour}
+        setValue={setDishFlavour}
+        onFlavourChange={onFlavourChange}
+      />
+      <Button
+        color={"danger"}
+        onClick={() => {
+          console.log(dishTemperature, dishFlavour, dishCategory);
+        }}
+      >
+        Find&nbsp;recipe
+      </Button>
     </Stack>
   );
 };
