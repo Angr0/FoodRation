@@ -53,7 +53,7 @@ const MainPage = () => {
         <Autocomplete
           variant="outlined"
           color="primary"
-          placeholder={"Recipes..."}
+          placeholder={"Find your recipe"}
           options={autoCompleteOptions}
           getOptionLabel={(option) => option.name}
           renderOption={(props, option) => (

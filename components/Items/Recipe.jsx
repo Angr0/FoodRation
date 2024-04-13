@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Card, Box, List, ListItem, Stack, Divider } from "@mui/joy";
+import { Card, Box, List, ListItem, Stack, Button, Input } from "@mui/joy";
 import axios from "axios";
-import { CardContent, CardMedia } from "@mui/material";
+import { Alert, CardContent, CardMedia, Snackbar } from "@mui/material";
 import { FaMugHot, FaRegSnowflake, FaStar } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 const Recipe = () => {
+  const username = useSelector((state) => state.user.username);
+  const { register, handleSubmit, watch } = useForm();
   const { recipeUrl } = useParams();
   const [recipe, setRecipe] = useState({});
+  const [fridge, setFridge] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const {
     name,
     is_warm,
@@ -25,11 +31,20 @@ const Recipe = () => {
     axios.get(`http://localhost:8000/recipe/${recipeUrl}`).then(({ data }) => {
       setRecipe(data);
     });
-  }, [recipeUrl]);
+
+    axios
+      .get(`http://localhost:8000/fridge/${username}/`)
+      .then(({ data }) => {
+        setFridge(data);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  }, [recipeUrl, username]);
 
   const likeRecipe = (e) => {
     axios
-      .post("http://localhost:8000/favourite-recipes/Adach/", {
+      .post(`http://localhost:8000/favourite-recipes/${username}/`, {
         name: "jajko",
       })
       .then((r) => {
@@ -37,6 +52,62 @@ const Recipe = () => {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const getReversedQuantities = () => {
+    const result = [];
+
+    ingredients.forEach((ingredient) => {
+      const fridgeItem = fridge.find(
+        (fridgeItem) => ingredient?.ingredient === fridgeItem?.ingredient_name,
+      );
+
+      if (fridgeItem)
+        result.push({
+          name: ingredient.ingredient,
+          quantity: -Math.min(fridgeItem?.quantity, ingredient.quantity),
+        });
+    });
+
+    return result;
+  };
+
+  const openSnackbar = () => {
+    setSnackbarOpen(true);
+  };
+
+  const closeSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
+
+  const cookedMeal = ({ portions }) => {
+    axios
+      .put(`http://localhost:8000/fridge/${username}/`, getReversedQuantities())
+      .then((r) => {
+        console.log(r);
+        openSnackbar();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+
+    axios
+      .post("http://localhost:8000/cooking-history/", {
+        user_login: username,
+        recipe_name: name,
+        portions: portions || 1,
+        date: new Date(),
+      })
+      .then((r) => {
+        console.log(r);
+      })
+      .catch((errors) => {
+        console.log(errors);
       });
   };
 
@@ -93,7 +164,7 @@ const Recipe = () => {
               Ingredients:
               {ingredients?.map(({ ingredient, quantity, unit }) => (
                 <ListItem key={ingredient}>
-                  {ingredient} x {quantity} [{unit}]
+                  {ingredient} x {quantity * (watch("portions") || 1)} [{unit}]
                 </ListItem>
               ))}
             </List>
@@ -106,10 +177,44 @@ const Recipe = () => {
               ))}
             </List>
           </Stack>
-          <Divider />
-          <footer>author: {author_login}</footer>
+
+          <Stack
+            direction={{ xs: "column-reverse", sm: "row" }}
+            justifyContent={"space-between"}
+          >
+            <footer>author: {author_login}</footer>
+            <Stack direction={"row"} gap={1}>
+              <Input
+                type={"number"}
+                {...register("portions")}
+                slotProps={{ input: { min: 1 } }}
+                required
+                defaultValue={1}
+                sx={{ maxWidth: "6rem" }}
+              />
+              <Button color={"danger"} onClick={handleSubmit(cookedMeal)}>
+                Cooked!
+              </Button>
+            </Stack>
+          </Stack>
         </CardContent>
       </Card>
+
+      <Snackbar
+        color={"primary"}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+      >
+        <Alert
+          onClose={closeSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Let me cook! 🫡
+        </Alert>
+      </Snackbar>
     </Stack>
   );
 };

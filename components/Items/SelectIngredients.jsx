@@ -13,7 +13,7 @@ const SelectIngredients = ({ setCurrentIngredient }) => {
   return (
     <Select
       placeholder="Ingredients"
-      sx={{ minWidth: "12rem", maxWidth: "24rem" }}
+      sx={{ minWidth: "12rem", maxWidth: "--max-width-mobile-content" }}
       onChange={(_, newValue) => setCurrentIngredient(ingredients[newValue])}
     >
       {ingredients?.map(({ name }, index) => (

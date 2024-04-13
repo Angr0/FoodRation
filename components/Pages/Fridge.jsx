@@ -13,16 +13,22 @@ const Fridge = () => {
   const [currentIngredient, setCurrentIngredient] = useState({});
   const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
+  const setIngredients = () => {
     axios
       .get(`http://localhost:8000/fridge/${username}/`)
       .then(({ data }) => {
-        setFridgeIngredients(data);
+        setFridgeIngredients(
+          data.filter((fridgeIngredient) => fridgeIngredient?.quantity > 0),
+        );
       })
       .catch((errors) => {
         console.log(errors);
       });
-  }, [username]);
+  };
+
+  useEffect(() => {
+    setIngredients();
+  }, [setIngredients, username]);
 
   const addIngredient = ({ quantity }, e) => {
     e.preventDefault();
@@ -37,11 +43,7 @@ const Fridge = () => {
       .then((r) => {
         console.log(r);
 
-        axios
-          .get(`http://localhost:8000/fridge/${username}/`)
-          .then(({ data }) => {
-            setFridgeIngredients(data);
-          });
+        setIngredients();
       })
       .catch((errors) => {
         console.log(errors);
@@ -65,11 +67,16 @@ const Fridge = () => {
             justifyContent={"center"}
             alignItems={"center"}
           >
-            <Grid xs={12} sm={5}>
+            <Grid
+              xs={10}
+              sm={5}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
               <SelectIngredients setCurrentIngredient={setCurrentIngredient} />
             </Grid>
 
-            <Grid xs={2} sm={2}>
+            <Grid xs={3} sm={2}>
               <Input
                 type="number"
                 defaultValue={1}
@@ -83,11 +90,11 @@ const Fridge = () => {
               />
             </Grid>
 
-            <Grid xs={2} md={3}>
+            <Grid xs={4} sm={3}>
               <span>{currentIngredient.unit_name}</span>
             </Grid>
 
-            <Grid xs={1} md={1}>
+            <Grid xs={2} sm={1}>
               <Button
                 type={"submit"}
                 disabled={Object.keys(currentIngredient).length === 0}
