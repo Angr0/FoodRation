@@ -7,7 +7,7 @@ const FastAccessBox = ({
   title,
   text,
   color = "neutral",
-  variant = "soft",
+  variant = "solid",
   link = "public_recipes",
   big = false,
 }) => {
