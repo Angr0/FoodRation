@@ -8,6 +8,7 @@ import { FaX } from "react-icons/fa6";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import decimalToFraction from "../../helper/decimalToFraction.js";
 
 const Recipe = () => {
   const username = useSelector((state) => state.user.username);
@@ -71,7 +72,7 @@ const Recipe = () => {
           name: ingredient.ingredient,
           quantity:
             -Math.min(fridgeItem?.quantity, ingredient.quantity) *
-            parseInt(portions || 0),
+            (parseInt(portions) || 1),
         });
     });
 
@@ -181,7 +182,8 @@ const Recipe = () => {
               Ingredients:
               {ingredients?.map(({ ingredient, quantity, unit }) => (
                 <ListItem key={ingredient}>
-                  {ingredient} x {quantity * (watch("portions") || 1)} [{unit}]
+                  {decimalToFraction(quantity * (watch("portions") || 1))} [
+                  {unit}]
                 </ListItem>
               ))}
             </List>
