@@ -12,8 +12,8 @@ const Sidebar = ({
   setDishCategory,
   dishTemperature,
   setDishTemperature,
-  onTemperatureChange,
-  onFlavourChange,
+  setAllCategories,
+  reset,
 }) => {
   return (
     <Stack sx={{ ...style, maxWidth: "14rem" }} spacing={1}>
@@ -21,27 +21,24 @@ const Sidebar = ({
       <TemperatureToggle
         value={dishTemperature}
         setValue={setDishTemperature}
-        onTemperatureChange={onTemperatureChange}
+        setAllCategories={setAllCategories}
       />
 
       <h2>Categories</h2>
-      <Categories value={dishCategory} setValue={setDishCategory} />
+      <Categories
+        value={dishCategory}
+        setValue={setDishCategory}
+        setAllCategories={setAllCategories}
+      />
 
       <h2>Flavours</h2>
       <Flavours
         style={{ display: "flex", flexWrap: "wrap" }}
         value={dishFlavour}
         setValue={setDishFlavour}
-        onFlavourChange={onFlavourChange}
+        setAllCategories={setAllCategories}
       />
-      <Button
-        color={"danger"}
-        onClick={() => {
-          console.log(dishTemperature, dishFlavour, dishCategory);
-        }}
-      >
-        Find&nbsp;recipe
-      </Button>
+      <Button onClick={reset}>Clear</Button>
     </Stack>
   );
 };

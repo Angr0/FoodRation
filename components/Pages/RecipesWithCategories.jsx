@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/joy";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Stack } from "@mui/joy";
 import Flavours from "../Items/Flavours.jsx";
 import Sidebar from "../Items/Sidebar.jsx";
 import axios from "axios";
 import Recipes from "../Items/Recipes.jsx";
 import Categories from "../Items/Categories.jsx";
+import TemperatureToggle from "../Items/TemperatureToggle.jsx";
 
 const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   const [recipes, setRecipes] = useState([]);
@@ -12,51 +13,56 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   const [dishTemperature, setDishTemperature] = useState([]);
   const [dishFlavour, setDishFlavour] = useState([]);
   const [dishCategory, setDishCategory] = useState([]);
+  const [allCategories, setAllCategories] = useState({
+    temperature: [],
+    flavour: [],
+    category: [],
+  });
 
   useEffect(() => {
     axios.get(link).then(({ data }) => {
       setRecipes(data);
-      setDisplayedRecipes(data);
     });
   }, [link]);
 
-  const filterRecipes = (e) => {
-    const value = e?.target?.value;
-
-    if (value === "") setDisplayedRecipes(recipes);
-    else {
-      setDisplayedRecipes(
-        recipes.filter(({ name }) =>
-          name.toLowerCase().includes(value.toLowerCase()),
-        ),
-      );
-    }
-  };
-  //TODO filtrowanie chyba trzeba na backend robic
-  const onFlavourChange = (flavour) => {
-    setDisplayedRecipes((oldRecipes) =>
-      oldRecipes.filter(({ flavours }) => {
-        if (flavour === []) return oldRecipes;
-        return flavours.includes(...flavour);
-        // console.log(flavours.includes(...flavour));
-        // console.log(flavours);
-        // console.log(flavour);
-      }),
+  const filterRecipes = useCallback(() => {
+    setDisplayedRecipes(
+      recipes.filter(
+        (recipe) =>
+          (allCategories.temperature.length === 0
+            ? true
+            : allCategories.temperature.some((temperature) => {
+                if (allCategories.temperature.length === 0) return true;
+                const warmDish = recipe?.is_warm ? "hot" : "cold";
+                return temperature === warmDish;
+              })) &&
+          recipe.flavours.some((flavour) => {
+            if (allCategories.flavour.length === 0) return true;
+            return allCategories.flavour.includes(flavour);
+          }) &&
+          recipe.categories.some((category) => {
+            if (allCategories.category.length === 0) return true;
+            return allCategories.category.includes(category);
+          }),
+      ),
     );
+  }, [allCategories, recipes]);
+
+  useEffect(() => {
+    filterRecipes();
+  }, [allCategories, filterRecipes, recipes]);
+
+  const reset = () => {
+    setDishFlavour([]);
+    setDishTemperature([]);
+    setDishCategory([]);
+    setAllCategories({
+      temperature: [],
+      flavour: [],
+      category: [],
+    });
   };
 
-  const onTemperatureChange = (toggleButtonValue) => {
-    if (toggleButtonValue.length === 2) setDisplayedRecipes(recipes);
-    else if (toggleButtonValue.includes("hot"))
-      setDisplayedRecipes((oldRecipes) =>
-        oldRecipes.filter(({ is_warm }) => is_warm),
-      );
-    else if (toggleButtonValue.includes("cold"))
-      setDisplayedRecipes((oldRecipes) =>
-        oldRecipes.filter(({ is_warm }) => !is_warm),
-      );
-    else setDisplayedRecipes(recipes);
-  };
   return (
     <Stack direction={"row"} justifyContent="center" gap={4} mt={2} mb={4}>
       <Sidebar
@@ -67,8 +73,8 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
         setDishCategory={setDishCategory}
         dishTemperature={dishTemperature}
         setDishTemperature={setDishTemperature}
-        onTemperatureChange={onTemperatureChange}
-        onFlavourChange={onFlavourChange}
+        setAllCategories={setAllCategories}
+        reset={reset}
       />
 
       <Stack
@@ -81,12 +87,23 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
           alignItems="center"
           spacing={{ xs: 1, md: 4 }}
           direction={{ xs: "column", md: "row" }}
+          display={{ sx: "flex", md: "none" }}
         >
+          <TemperatureToggle
+            value={dishTemperature}
+            setValue={setDishTemperature}
+            setAllCategories={setAllCategories}
+            style={{
+              display: { sx: "flex", md: "none" },
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          />
           <Categories
             value={dishCategory}
             setValue={setDishCategory}
+            setAllCategories={setAllCategories}
             style={{
-              display: { sx: "flex", md: "none" },
               flexWrap: "wrap",
               justifyContent: "center",
             }}
@@ -94,18 +111,13 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
           <Flavours
             value={dishFlavour}
             setValue={setDishFlavour}
+            setAllCategories={setAllCategories}
             style={{
-              display: { sx: "flex", md: "none" },
               flexWrap: "wrap",
               justifyContent: "center",
             }}
-            onFlavourChange={onFlavourChange}
           />
-          <Stack
-            direction="row"
-            justifyContent="center"
-            gap={{ xs: 1, md: 4 }}
-          ></Stack>
+          <Button onClick={reset}>Clear</Button>
         </Stack>
 
         <Recipes recipes={displayedRecipes} />
