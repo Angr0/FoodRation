@@ -59,6 +59,7 @@ const MainPage = () => {
         }}
       >
         <Autocomplete
+          freeSolo
           variant="outlined"
           color="primary"
           placeholder={"Find your recipe"}
@@ -66,7 +67,9 @@ const MainPage = () => {
           getOptionLabel={(option) => option.name}
           renderOption={(props, option) => (
             <Link to={`/recipe/${option.name}`} key={option.name}>
-              <AutocompleteOption {...props}>{option.name}</AutocompleteOption>
+              <AutocompleteOption color={"primary"} {...props}>
+                {option.name}
+              </AutocompleteOption>
             </Link>
           )}
           sx={{

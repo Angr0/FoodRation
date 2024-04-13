@@ -3,7 +3,7 @@ import RecipeCard from "./RecipeCard.jsx";
 import { CircularProgress } from "@mui/joy";
 
 const Recipes = ({ recipes = [], loading }) => {
-  if (loading) return <CircularProgress />;
+  if (loading) return <CircularProgress color={"danger"} />;
   if (recipes?.length === 0) return "There is no recipes :(";
   return (
     <>

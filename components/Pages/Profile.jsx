@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import BioChangeInput from "../Items/BioChangeInput.jsx";
 import { useForm } from "react-hook-form";
 import { Alert, Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const username = useSelector((state) => state.user.username);
@@ -26,6 +27,7 @@ const Profile = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [ingredients, setIngredients] = useState();
+  const navigate = useNavigate();
 
   const openSnackbar = () => {
     setSnackbarOpen(true);
@@ -40,6 +42,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    if (!username) {
+      navigate("/");
+      return;
+    }
+
     axios
       .get(`http://localhost:8000/without-excluded/${username}/`)
       .then(({ data }) => {
@@ -62,7 +69,7 @@ const Profile = () => {
         setValue("weight", weight);
         setValue("age", age);
       });
-  }, [username, setValue]);
+  }, [username, setValue, navigate]);
 
   const saveBio = ({ age, height, weight }) => {
     axios
@@ -122,7 +129,7 @@ const Profile = () => {
 
   return (
     <Stack direction={"row"} justifyContent="center" gap={4} mt={2} mb={4}>
-      <Card>
+      <Card color={"neutral"} variant={"solid"}>
         <Stack
           direction={{ xs: "column", md: "row" }}
           justifyContent={"center"}
@@ -149,12 +156,7 @@ const Profile = () => {
             <Stack gap={1}>
               <FormControl>
                 <FormLabel>New password</FormLabel>
-                <Input
-                  required
-                  type={"password"}
-                  {...register("password")}
-                  color={"primary"}
-                />
+                <Input required type={"password"} {...register("password")} />
               </FormControl>
               <FormControl>
                 <FormLabel>Repeat new password</FormLabel>
@@ -162,7 +164,6 @@ const Profile = () => {
                   required
                   type={"password"}
                   {...register("newPassword")}
-                  color={"primary"}
                 />
               </FormControl>
               <Button color={"danger"} type={"submit"}>

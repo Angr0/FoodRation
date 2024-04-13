@@ -12,6 +12,8 @@ const SelectIngredients = ({ setCurrentIngredient }) => {
 
   return (
     <Select
+      color={"danger"}
+      variant={"outlined"}
       placeholder="Ingredients"
       sx={{ minWidth: "12rem", maxWidth: "--max-width-mobile-content" }}
       onChange={(_, newValue) => setCurrentIngredient(ingredients[newValue])}

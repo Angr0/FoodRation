@@ -49,6 +49,7 @@ const MobileMenu = ({
                         logOut();
                         closeModal();
                       }}
+                      color={"danger"}
                     >
                       Log out
                     </Button>
@@ -56,7 +57,11 @@ const MobileMenu = ({
                 </Link>
                 <Link to={`/${username}`}>
                   <ListItem>
-                    <Button variant={"outlined"} onClick={closeModal}>
+                    <Button
+                      variant={"outlined"}
+                      onClick={closeModal}
+                      color={"danger"}
+                    >
                       My account
                     </Button>
                   </ListItem>

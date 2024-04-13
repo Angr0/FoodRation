@@ -41,7 +41,7 @@ const ModalLogIn = ({ open, setOpen }) => {
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
       <form onSubmit={handleSubmit(logIn)}>
-        <ModalDialog>
+        <ModalDialog color={"neutral"} variant={"solid"}>
           <ModalClose />
           <FormControl>
             <FormLabel>Login</FormLabel>

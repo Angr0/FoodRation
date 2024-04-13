@@ -57,7 +57,11 @@ const ModalSignUp = ({ open, setOpen }) => {
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
-      <ModalDialog sx={{ maxHeight: "95%", overflowY: "scroll" }}>
+      <ModalDialog
+        sx={{ maxHeight: "95%", overflowY: "scroll" }}
+        color={"neutral"}
+        variant={"solid"}
+      >
         <form onSubmit={handleSubmit(signUp)}>
           <Stack gap={2}>
             <FormControl>

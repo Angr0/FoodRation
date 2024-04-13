@@ -29,7 +29,7 @@ const FridgeIngredient = ({
   };
 
   return (
-    <Card sx={{ width: "49%", minWidth: "18rem" }}>
+    <Card sx={{ width: "49%", minWidth: "18rem" }} variant={"soft"}>
       <Stack direction={"row"} gap={2}>
         <CardMedia
           component="img"

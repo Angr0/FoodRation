@@ -38,7 +38,9 @@ const Sidebar = ({
         setValue={setDishFlavour}
         setAllCategories={setAllCategories}
       />
-      <Button onClick={reset}>Clear</Button>
+      <Button onClick={reset} color={"danger"}>
+        Clear
+      </Button>
     </Stack>
   );
 };

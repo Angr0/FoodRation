@@ -6,12 +6,14 @@ import axios from "axios";
 import SelectIngredients from "../Items/SelectIngredients.jsx";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Fridge = () => {
   const username = useSelector((state) => state.user.username);
   const [fridgeIngredients, setFridgeIngredients] = useState([]);
   const [currentIngredient, setCurrentIngredient] = useState({});
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const setIngredients = useCallback(() => {
     axios
@@ -27,8 +29,13 @@ const Fridge = () => {
   }, [username]);
 
   useEffect(() => {
+    if (!username) {
+      navigate("/");
+      return;
+    }
+
     setIngredients();
-  }, [setIngredients, username]);
+  }, [navigate, setIngredients, username]);
 
   const addIngredient = ({ quantity }, e) => {
     e.preventDefault();

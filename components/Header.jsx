@@ -51,12 +51,14 @@ const Header = () => {
               <>
                 <Link to={`/`}>
                   <ListItem>
-                    <Button onClick={logOut}>Log out</Button>
+                    <Button color={"danger"} onClick={logOut}>
+                      Log out
+                    </Button>
                   </ListItem>
                 </Link>
                 <Link to={`/${username}`}>
                   <ListItem>
-                    <Button variant={"outlined"} color="primary">
+                    <Button variant={"outlined"} color={"danger"}>
                       My account
                     </Button>
                   </ListItem>

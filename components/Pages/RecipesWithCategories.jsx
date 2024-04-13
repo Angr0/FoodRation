@@ -6,8 +6,11 @@ import axios from "axios";
 import Recipes from "../Items/Recipes.jsx";
 import Categories from "../Items/Categories.jsx";
 import TemperatureToggle from "../Items/TemperatureToggle.jsx";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
+  const username = useSelector((state) => state.user.username);
   const [recipes, setRecipes] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
   const [dishTemperature, setDishTemperature] = useState([]);
@@ -19,14 +22,20 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
     category: [],
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!username && link !== "http://localhost:8000/recipes/") {
+      navigate("/");
+      return;
+    }
+
     setLoading(true);
     axios.get(link).then(({ data }) => {
       setRecipes(data);
       setLoading(false);
     });
-  }, [link]);
+  }, [link, navigate, username]);
 
   const filterRecipes = useCallback(() => {
     setDisplayedRecipes(
@@ -120,7 +129,9 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
               justifyContent: "center",
             }}
           />
-          <Button onClick={reset}>Clear</Button>
+          <Button onClick={reset} color={"danger"}>
+            Clear
+          </Button>
         </Stack>
 
         <Recipes recipes={displayedRecipes} loading={loading} />
