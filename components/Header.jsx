@@ -67,7 +67,7 @@ const Header = () => {
                 <ListItem>
                   <Button
                     variant={"outlined"}
-                    color="primary"
+                    color="neutral"
                     onClick={() => {
                       setOpenLogInModal(true);
                     }}
@@ -77,7 +77,7 @@ const Header = () => {
                 </ListItem>
                 <ListItem>
                   <Button
-                    color="primary"
+                    color="danger"
                     onClick={() => {
                       setOpenSignUpModal(true);
                     }}
@@ -94,7 +94,7 @@ const Header = () => {
                   return (
                     <Link to={link} key={text}>
                       <ListItem>
-                        <Button variant={"plain"} color="primary">
+                        <Button variant={"plain"} color="neutral">
                           {text}
                         </Button>
                       </ListItem>
@@ -105,7 +105,7 @@ const Header = () => {
               return (
                 <Link to={link} key={text}>
                   <ListItem>
-                    <Button variant={"plain"} color="primary">
+                    <Button variant={"plain"} color="neutral">
                       {text}
                     </Button>
                   </ListItem>

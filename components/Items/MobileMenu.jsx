@@ -66,6 +66,7 @@ const MobileMenu = ({
               <>
                 <ListItem>
                   <Button
+                    color={"neutral"}
                     variant={"outlined"}
                     onClick={() => {
                       setOpenLogInModal(true);
@@ -77,7 +78,8 @@ const MobileMenu = ({
                 </ListItem>
                 <ListItem>
                   <Button
-                    variant={"soft"}
+                    color="danger"
+                    variant="solid"
                     onClick={() => {
                       setOpenSignUpModal(true);
                       closeModal();

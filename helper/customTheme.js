@@ -18,7 +18,7 @@ const customTheme = {
         },
         text: {
           primary: "var(--joy-palette-primary-900)",
-          secondary: "var(--joy-palette-primary-900)",
+          neutral: "var(--joy-palette-primary-900)",
           tertiary: "var(--joy-palette-primary-900)",
           icon: "var(--joy-palette-primary-900)",
         },
@@ -42,9 +42,20 @@ const customTheme = {
           400: "#f7f0e7",
           500: "#f6eee4",
           600: "#ddd6cd",
-          700: "#c5beb6",
+          700: "#000f1d",
           800: "#aca7a0",
           900: "#948f89",
+          solidColor:'var(--joy-palette-primary-900)',
+          solidBg: '#fff',
+          plainColor: 'var(--joy-palette-danger-600)',          
+          plainHoverBg: 'var(--joy-palette-danger-200)',
+          plainHoverColor: 'var(--joy-palette-neutral-50)',
+          outlinedColor: 'var(--joy-palette-danger-600)',
+          outlinedBorder: 'var(--joy-palette-danger-600)',
+          outlinedHoverBg: 'var(--joy-palette-danger-200)',
+          outlinedBg: "transparent",
+          outlinedHoverColor: 'var(--joy-palette-neutral-50)',
+          outlinedHoverBorder: 'var(--joy-palette-danger-200)'
         },
         danger: {
           50: "#e2bd89",
@@ -57,6 +68,7 @@ const customTheme = {
           700: "#9d620e",
           800: "#89550d",
           900: "#76490b",
+          solidBg:'var(--joy-palette-danger-200)'
         },
         success: {
           50: "#fafafa",

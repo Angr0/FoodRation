@@ -75,7 +75,8 @@ const Calculator = () => {
       mb={4}
     >
       <Card
-        color="danger"
+        color="neutral"
+        variant="solid"
         sx={{ maxWidth: 600, width: "100%", paddingX: { xs: 2, sm: 10 } }}
       >
         <Stack color={"black"} alignItems="center" fontSize={25}>
