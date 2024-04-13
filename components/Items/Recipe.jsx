@@ -32,27 +32,29 @@ const Recipe = () => {
       setRecipe(data);
     });
 
-    axios
-      .get(`http://localhost:8000/fridge/${username}/`)
-      .then(({ data }) => {
-        setFridge(data);
-      })
-      .catch((errors) => {
-        console.log(errors);
-      });
+    if (username)
+      axios
+        .get(`http://localhost:8000/fridge/${username}/`)
+        .then(({ data }) => {
+          setFridge(data);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
   }, [recipeUrl, username]);
 
-  const likeRecipe = (e) => {
-    axios
-      .post(`http://localhost:8000/favourite-recipes/${username}/`, {
-        name: "jajko",
-      })
-      .then((r) => {
-        console.log(r);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const likeRecipe = () => {
+    console.log(name);
+    // axios
+    //   .post(`http://localhost:8000/favourite-recipes/${username}/`, {
+    //     name: "spaghetti",
+    //   })
+    //   .then((r) => {
+    //     console.log(r);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const getReversedQuantities = () => {
@@ -125,9 +127,18 @@ const Recipe = () => {
             <FaX p={2} />
           </Link>
         </Box>
-        <Box sx={{ position: "absolute", top: "1rem", right: "1rem" }}>
-          <FaStar p={2} onClick={likeRecipe} />
-        </Box>
+        {username && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "1rem",
+              right: "1rem",
+              cursor: "pointer",
+            }}
+          >
+            <FaStar p={2} onClick={likeRecipe} />
+          </Box>
+        )}
         <CardContent>
           <Stack gap={2}>
             <Stack

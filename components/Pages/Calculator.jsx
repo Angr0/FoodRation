@@ -25,8 +25,7 @@ const Calculator = () => {
         setValue("height", height);
         setValue("weight", weight);
         setValue("age", age);
-        // setValue("gender", is_male ? "male" : "female");
-        setValue("gender", "female");
+        setValue("gender", is_male ? "male" : "female");
       })
       .catch((errors) => {
         console.log(errors);
@@ -90,7 +89,6 @@ const Calculator = () => {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="gender"
-              defaultValue={"male"}
             >
               <Radio
                 value={"male"}

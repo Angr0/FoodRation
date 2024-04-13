@@ -10,12 +10,14 @@ import { store } from "../redux/store.js";
 import { saveState } from "./localStorage.js";
 import Calculator from "../components/Pages/Calculator.jsx";
 import RecipesWithCategories from "../components/Pages/RecipesWithCategories.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
-  const username = store.getState().user.username;
+  const username = useSelector((state) => state.user.username);
+
   store.subscribe(() => {
     saveState({
-      username: username,
+      username: store.getState().user.username,
     });
   });
 
