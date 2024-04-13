@@ -1,7 +1,9 @@
 import React from "react";
 import RecipeCard from "./RecipeCard.jsx";
+import { CircularProgress } from "@mui/joy";
 
-const Recipes = ({ recipes = [] }) => {
+const Recipes = ({ recipes = [], loading }) => {
+  if (loading) return <CircularProgress />;
   if (recipes?.length === 0) return "There is no recipes :(";
   return (
     <>

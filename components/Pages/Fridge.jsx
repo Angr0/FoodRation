@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Input, Stack } from "@mui/joy";
 import FridgeIngredient from "../Items/FridgeIngredient.jsx";
 import { HiPlus } from "react-icons/hi";
@@ -13,7 +13,7 @@ const Fridge = () => {
   const [currentIngredient, setCurrentIngredient] = useState({});
   const { register, handleSubmit } = useForm();
 
-  const setIngredients = () => {
+  const setIngredients = useCallback(() => {
     axios
       .get(`http://localhost:8000/fridge/${username}/`)
       .then(({ data }) => {
@@ -24,7 +24,7 @@ const Fridge = () => {
       .catch((errors) => {
         console.log(errors);
       });
-  };
+  }, [username]);
 
   useEffect(() => {
     setIngredients();

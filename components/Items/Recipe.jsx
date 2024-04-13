@@ -30,6 +30,7 @@ const Recipe = () => {
   useEffect(() => {
     axios.get(`http://localhost:8000/recipe/${recipeUrl}`).then(({ data }) => {
       setRecipe(data);
+      console.log(data);
     });
 
     if (username)
@@ -57,7 +58,7 @@ const Recipe = () => {
     //   });
   };
 
-  const getReversedQuantities = () => {
+  const getReversedQuantities = (portions) => {
     const result = [];
 
     ingredients.forEach((ingredient) => {
@@ -68,7 +69,9 @@ const Recipe = () => {
       if (fridgeItem)
         result.push({
           name: ingredient.ingredient,
-          quantity: -Math.min(fridgeItem?.quantity, ingredient.quantity),
+          quantity:
+            -Math.min(fridgeItem?.quantity, ingredient.quantity) *
+            parseInt(portions || 0),
         });
     });
 
@@ -89,7 +92,10 @@ const Recipe = () => {
 
   const cookedMeal = ({ portions }) => {
     axios
-      .put(`http://localhost:8000/fridge/${username}/`, getReversedQuantities())
+      .put(
+        `http://localhost:8000/fridge/${username}/`,
+        getReversedQuantities(portions),
+      )
       .then((r) => {
         console.log(r);
         openSnackbar();

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import SpeedIcon from "@mui/icons-material/Speed.js";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter.js";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Autocomplete, AutocompleteOption, Stack } from "@mui/joy";
+import {
+  Autocomplete,
+  AutocompleteOption,
+  CircularProgress,
+  Stack,
+} from "@mui/joy";
 import FastAccessBox from "../Items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -31,10 +36,13 @@ const MainPage = () => {
   ];
 
   const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function getRecipesToSearch() {
+    setLoading(true);
     axios.get("http://localhost:8000/search-data/").then(({ data }) => {
       setAutocompleteOptions(data);
+      setLoading(false);
     });
   }
 
@@ -67,6 +75,8 @@ const MainPage = () => {
           }}
           onOpen={getRecipesToSearch}
           filterOptions={filterOptions}
+          loading={loading}
+          endDecorator={loading ? <CircularProgress size="sm" /> : null}
         />
         <Stack direction={{ xs: "column" }} spacing={{ xs: 2, md: 3 }}>
           <Stack

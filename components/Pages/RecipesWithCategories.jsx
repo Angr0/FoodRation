@@ -18,10 +18,13 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
     flavour: [],
     category: [],
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios.get(link).then(({ data }) => {
       setRecipes(data);
+      setLoading(false);
     });
   }, [link]);
 
@@ -120,7 +123,7 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
           <Button onClick={reset}>Clear</Button>
         </Stack>
 
-        <Recipes recipes={displayedRecipes} />
+        <Recipes recipes={displayedRecipes} loading={loading} />
       </Stack>
     </Stack>
   );
