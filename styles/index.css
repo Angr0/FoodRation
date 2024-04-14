@@ -10,7 +10,9 @@
     -webkit-text-size-adjust: 100%;
 
     --max-width-main-content: 608px;
+    --max-width-main-content-without-padding: 410px;
     --max-width-mobile-content: 288px;
+
 
     overflow-x: hidden;
 }

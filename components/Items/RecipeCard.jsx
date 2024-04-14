@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack } from "@mui/joy";
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Card, CardContent, CardMedia, Box } from "@mui/material";
 import { FaMugHot, FaRegSnowflake } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
@@ -20,7 +20,7 @@ const RecipeCard = ({
       style={{
         maxWidth: "var(--max-width-main-content)",
         width: "100%",
-        maxHeight: 140,
+        maxHeight: 160,
       }}
     >
       <Card
@@ -40,17 +40,44 @@ const RecipeCard = ({
         />
         <CardContent>
           <Stack direction={"row"} alignItems={"center"} gap={1}>
-            <b>{name?.toUpperCase()}</b>
-            <span style={{ fontSize: "1rem" }}>
+            <b style={{ maxHeight: "48px", overflow: "hidden" }}>
+              {name?.toUpperCase()}
+            </b>
+
+            <Box
+              sx={{
+                fontSize: "1rem",
+                display: { xs: "none", sm: "block" },
+              }}
+            >
               {isWarm ? <FaMugHot /> : <FaRegSnowflake />}
-            </span>
+            </Box>
           </Stack>
-          <Stack direction={"row"} alignItems={"center"} gap={0.5}>
-            {typeName},
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            gap={0.5}
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            {typeName};{" "}
             {categories.map((category, index) => (
               <span key={category}>
                 {category}
-                <ComaWithoutLast index={index} length={categories.length} />
+                <ComaWithoutLast
+                  index={index}
+                  length={categories.length}
+                  endDecorator={"; "}
+                />
+              </span>
+            ))}
+            {flavours.map((flavour, index) => (
+              <span key={flavour}>
+                {flavour}
+                <ComaWithoutLast
+                  index={index}
+                  length={flavours.length}
+                  endDecorator={";"}
+                />
               </span>
             ))}
           </Stack>
@@ -59,27 +86,20 @@ const RecipeCard = ({
             alignItems={"center"}
             gap={1}
             color={"gray"}
-            sx={{ display: { xs: "none", md: "block" } }}
+            sx={{
+              display: { xs: "none", md: "block" },
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              height: "24px",
+              maxWidth: "var(--max-width-main-content-without-padding)",
+            }}
           >
-            Ingredients:{" "}
+            <b>Ingredients: </b>
             {ingredients.map((ingredient, index) => (
               <span key={ingredient}>
                 {ingredient}
                 <ComaWithoutLast index={index} length={ingredients.length} />
-              </span>
-            ))}
-          </Stack>
-          <Stack
-            direction={"row"}
-            alignItems={"center"}
-            gap={1}
-            color={"gray"}
-            sx={{ display: { xs: "none", md: "block" } }}
-          >
-            {flavours.map((flavour, index) => (
-              <span key={flavour}>
-                {flavour}
-                <ComaWithoutLast index={index} length={flavours.length} />
               </span>
             ))}
           </Stack>
