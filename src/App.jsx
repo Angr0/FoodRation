@@ -12,6 +12,7 @@ import Calculator from "../components/Pages/Calculator.jsx";
 import RecipesWithCategories from "../components/Pages/RecipesWithCategories.jsx";
 import { useSelector } from "react-redux";
 import CookingHistory from "../components/Pages/CookingHistory.jsx";
+import ErrorPage from "../components/Pages/ErrorPage.jsx";
 
 function App() {
   const username = useSelector((state) => state.user.username);
@@ -82,7 +83,7 @@ function App() {
 
           <Route path=":userNameUrl" element={<Profile />} />
 
-          <Route path="*" element={<div>error page</div>} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Box>
     </Stack>
