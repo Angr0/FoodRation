@@ -6,6 +6,11 @@ console.log(persistedState);
 
 const initialState = {
   username: persistedState?.username,
+  filters: {
+    temperature: [],
+    flavour: [],
+    category: [],
+  },
 };
 
 const userSlice = createSlice({
@@ -15,9 +20,15 @@ const userSlice = createSlice({
     setUsername(state, { payload }) {
       state.username = payload;
     },
+    setFiltersCategory(state, { payload }) {
+      state.filters = {
+        ...state.filters,
+        category: payload,
+      };
+    },
   },
 });
 
-export const { setUsername } = userSlice.actions;
+export const { setUsername, setFiltersCategory } = userSlice.actions;
 
 export default userSlice.reducer;

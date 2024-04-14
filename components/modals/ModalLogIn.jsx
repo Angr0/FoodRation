@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   FormControl,
@@ -16,15 +16,15 @@ import { useDispatch } from "react-redux";
 
 const ModalLogIn = ({ open, setOpen }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: { login: "Adach", password: "gruby" },
-  });
+  const { register, handleSubmit, reset } = useForm();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const logIn = (logInData) => {
     axios
       .post("http://localhost:8000/login/", logInData)
       .then(({ data }) => {
         if (data["password matches"]) {
+          setErrorMessage("");
           setOpen(false);
           dispatch(setUsername(logInData.login));
           reset();
@@ -34,6 +34,7 @@ const ModalLogIn = ({ open, setOpen }) => {
       .catch((err) => {
         console.log(err);
         console.log(logInData);
+        setErrorMessage("Wrong login or password");
         reset();
       });
   };
@@ -57,6 +58,7 @@ const ModalLogIn = ({ open, setOpen }) => {
             />
           </FormControl>
           <Button type={"submit"}>Log in</Button>
+          <span style={{ color: "lightcoral" }}>{errorMessage}</span>
         </ModalDialog>
       </form>
     </Modal>

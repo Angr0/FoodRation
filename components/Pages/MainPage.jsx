@@ -12,7 +12,8 @@ import FastAccessBox from "../Items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setFiltersCategory } from "../../redux/userSlice.js";
 
 const MainPage = ({ setOpenLogInModal }) => {
   const content = [
@@ -21,24 +22,28 @@ const MainPage = ({ setOpenLogInModal }) => {
       title: "Fast Recipe",
       text: "I don't have much time, so I need a dish that can be quickly prepared and cooked.",
       big: false,
+      filter: ["Quick"],
     },
     {
       icon: <FitnessCenterIcon sx={{ fontSize: "5rem" }} />,
       title: "Fit dish",
       text: "I'm looking for a recipe that is healthy, has good macros, and is rich in vitamins.",
       big: false,
+      filter: ["Fit"],
     },
     {
       icon: <FavoriteBorderIcon sx={{ fontSize: "5rem" }} />,
       title: "Favourites",
       text: "Treat yourself to tantalizing flavors with our limited-time offer!",
       big: true,
+      filter: [],
     },
   ];
 
   const username = useSelector((state) => state.user.username);
   const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   function getRecipesToSearch() {
     setLoading(true);
@@ -91,13 +96,16 @@ const MainPage = ({ setOpenLogInModal }) => {
           >
             {content
               .slice(0, content.length - 1)
-              ?.map(({ icon, title, text, big }, index) => (
+              ?.map(({ icon, title, text, big, filter }, index) => (
                 <FastAccessBox
                   key={index}
                   icon={icon}
                   title={title}
                   text={text}
                   big={big}
+                  onClick={() => {
+                    dispatch(setFiltersCategory(filter));
+                  }}
                 />
               ))}
           </Stack>

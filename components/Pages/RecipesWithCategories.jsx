@@ -16,6 +16,7 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   const [dishTemperature, setDishTemperature] = useState([]);
   const [dishFlavour, setDishFlavour] = useState([]);
   const [dishCategory, setDishCategory] = useState([]);
+  const filters = useSelector((state) => state.user.filters);
   const [allCategories, setAllCategories] = useState({
     temperature: [],
     flavour: [],
@@ -23,19 +24,6 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!username && link !== "http://localhost:8000/recipes/") {
-      navigate("/");
-      return;
-    }
-
-    setLoading(true);
-    axios.get(link).then(({ data }) => {
-      setRecipes(data);
-      setLoading(false);
-    });
-  }, [link, navigate, username]);
 
   const filterRecipes = useCallback(() => {
     setDisplayedRecipes(
@@ -57,6 +45,27 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
       ),
     );
   }, [allCategories, recipes]);
+
+  useEffect(() => {
+    if (!username && link !== "http://localhost:8000/recipes/") {
+      navigate("/");
+      return;
+    }
+
+    setDishCategory(filters.category);
+    setDishFlavour(filters.flavour);
+    setAllCategories({
+      temperature: [],
+      flavour: filters.flavour,
+      category: filters.category,
+    });
+
+    setLoading(true);
+    axios.get(link).then(({ data }) => {
+      setRecipes(data);
+      setLoading(false);
+    });
+  }, [filters.category, filters.flavour, link, navigate, username]);
 
   useEffect(() => {
     filterRecipes();
