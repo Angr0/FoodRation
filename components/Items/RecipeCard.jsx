@@ -38,8 +38,8 @@ const RecipeCard = ({
           src={iconUrl}
           title={name}
         />
-        <CardContent>
-          <Stack direction={"row"} alignItems={"center"} gap={1}>
+        <CardContent sx={{ width: "100%" }}>
+          <Stack direction={"row"} justifyContent={"space-between"} gap={1}>
             <b style={{ maxHeight: "48px", overflow: "hidden" }}>
               {name?.toUpperCase()}
             </b>

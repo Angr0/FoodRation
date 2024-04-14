@@ -67,10 +67,11 @@ const MainPage = ({ setOpenLogInModal }) => {
           placeholder={"Find your recipe"}
           options={autoCompleteOptions}
           getOptionLabel={(option) => option.name}
-          renderOption={(props, option) => (
-            <Link to={`/recipe/${option.name}`} key={option.name}>
+          renderOption={(props, { name, icon_link }) => (
+            <Link to={`/recipe/${name}`} key={name}>
               <AutocompleteOption color={"primary"} {...props}>
-                {option.name}
+                <img src={icon_link} alt={name} style={{ width: "2.5rem" }} />
+                {name}
               </AutocompleteOption>
             </Link>
           )}

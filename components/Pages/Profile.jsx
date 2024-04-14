@@ -10,8 +10,8 @@ import {
   FormLabel,
   FormControl,
   Divider,
-  Option,
-  Select,
+  AutocompleteOption,
+  Autocomplete,
 } from "@mui/joy";
 import { FaTrashAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -19,6 +19,7 @@ import BioChangeInput from "../Items/BioChangeInput.jsx";
 import { useForm } from "react-hook-form";
 import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { matchSorter } from "match-sorter";
 
 const Profile = () => {
   const username = useSelector((state) => state.user.username);
@@ -26,7 +27,7 @@ const Profile = () => {
   const [userData, setUserData] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [excludedIngredients, setExcludedIngredients] = useState();
+  const [excludedIngredients, setExcludedIngredients] = useState([]);
   const navigate = useNavigate();
 
   const openSnackbar = () => {
@@ -124,8 +125,6 @@ const Profile = () => {
   };
 
   const addExcludedIngredient = (name) => {
-    console.log(name);
-
     axios
       .put(`http://localhost:8000/user-data/${username}/`, { name: name })
       .then((r) => {
@@ -139,8 +138,6 @@ const Profile = () => {
   };
 
   const removeExcludedIngredient = (name) => {
-    console.log(name);
-
     axios
       .delete(`http://localhost:8000/user-data/${username}/`, {
         data: { name: name },
@@ -154,6 +151,9 @@ const Profile = () => {
         console.log(errors);
       });
   };
+
+  const filterOptions = (options, { inputValue }) =>
+    matchSorter(options, inputValue, { keys: ["name"] });
 
   return (
     <Stack direction={"row"} justifyContent="center" gap={4} mt={2} mb={4}>
@@ -204,36 +204,49 @@ const Profile = () => {
         <List>
           <Stack gap={1} alignItems={"center"}>
             Excluded ingredients:
-            <Select
-              color={"danger"}
-              placeholder="Ingredients"
-              sx={{ minWidth: "12rem", maxWidth: "24rem" }}
-            >
-              {excludedIngredients?.map((name, index) => (
-                <Option
-                  key={name}
-                  value={index}
-                  onClick={() => {
-                    addExcludedIngredient(name);
-                  }}
-                >
+            <Autocomplete
+              freeSolo
+              disableClearable
+              variant="outlined"
+              color="danger"
+              placeholder={"Find your recipe"}
+              options={excludedIngredients}
+              getOptionLabel={(option) => option.name}
+              onChange={(event, option) => {
+                addExcludedIngredient(option?.name || "");
+              }}
+              renderOption={(props, { name, icon_link }) => (
+                <AutocompleteOption color={"danger"} {...props}>
+                  <img src={icon_link} alt={name} style={{ width: "2.5rem" }} />
                   {name}
-                </Option>
-              ))}
-            </Select>
+                </AutocompleteOption>
+              )}
+              sx={{
+                width: "100%",
+                maxWidth: "var(--max-width-mobile-content)",
+              }}
+              filterOptions={filterOptions}
+            />
             {userData?.excluded_ingredients.length === 0
               ? "You eat everything!"
-              : userData?.excluded_ingredients?.map((ingredient) => (
-                  <ListItem key={ingredient}>
-                    {ingredient}{" "}
-                    <FaTrashAlt
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        removeExcludedIngredient(ingredient);
-                      }}
-                    />
-                  </ListItem>
-                ))}
+              : userData?.excluded_ingredients?.map(({ name, icon_link }) => {
+                  return (
+                    <ListItem key={name}>
+                      <img
+                        src={icon_link}
+                        alt={name}
+                        style={{ width: "2rem" }}
+                      />
+                      {name}{" "}
+                      <FaTrashAlt
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          removeExcludedIngredient(name);
+                        }}
+                      />
+                    </ListItem>
+                  );
+                })}
           </Stack>
         </List>
       </Card>
