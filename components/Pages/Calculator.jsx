@@ -109,6 +109,7 @@ const Calculator = () => {
             <Input
               placeholder="0"
               type={"number"}
+              slotProps={{ input: { min: 0 } }}
               {...register("height")}
               color="danger"
             />
@@ -117,6 +118,7 @@ const Calculator = () => {
             <Input
               placeholder="0"
               type={"number"}
+              slotProps={{ input: { min: 0 } }}
               {...register("weight")}
               color="danger"
             />
@@ -125,6 +127,7 @@ const Calculator = () => {
             <Input
               placeholder="0"
               type={"number"}
+              slotProps={{ input: { min: 0 } }}
               {...register("age")}
               color="danger"
             />
