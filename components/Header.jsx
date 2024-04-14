@@ -10,11 +10,14 @@ import MobileMenu from "./Items/MobileMenu.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../redux/userSlice.js";
 
-const Header = () => {
+const Header = ({
+  openLogInModal,
+  setOpenLogInModal,
+  openSignUpModal,
+  setOpenSignUpModal,
+}) => {
   const dispatch = useDispatch();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [openLogInModal, setOpenLogInModal] = useState(false);
-  const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const username = useSelector((state) => state.user.username);
 
   const logOut = () => {

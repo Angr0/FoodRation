@@ -26,7 +26,7 @@ const Profile = () => {
   const [userData, setUserData] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [ingredients, setIngredients] = useState();
+  const [excludedIngredients, setExcludedIngredients] = useState();
   const navigate = useNavigate();
 
   const openSnackbar = () => {
@@ -41,26 +41,35 @@ const Profile = () => {
     setSnackbarOpen(false);
   };
 
+  const getExcludedIngredients = () => {
+    axios
+      .get(`http://localhost:8000/without-excluded/${username}/`)
+      .then(({ data }) => {
+        setExcludedIngredients(data);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+
+    getUserData();
+  };
+
+  const getUserData = () => {
+    axios
+      .get(`http://localhost:8000/user-data/${username}/`)
+      .then(({ data }) => {
+        setUserData(data);
+      });
+  };
+
   useEffect(() => {
     if (!username) {
       navigate("/");
       return;
     }
 
-    axios
-      .get(`http://localhost:8000/without-excluded/${username}/`)
-      .then(({ data }) => {
-        setIngredients(data);
-      })
-      .catch((errors) => {
-        console.log(errors);
-      });
-
-    axios
-      .get(`http://localhost:8000/user-data/${username}/`)
-      .then(({ data }) => {
-        setUserData(data);
-      });
+    getExcludedIngredients();
+    getUserData();
 
     axios
       .get(`http://localhost:8000/bio-calc/${username}/`)
@@ -117,14 +126,33 @@ const Profile = () => {
   const addExcludedIngredient = (name) => {
     console.log(name);
 
-    // axios
-    //   .put(``, {})
-    //   .then((r) => {
-    //     console.log(r);
-    //   })
-    //   .catch((errors) => {
-    //     console.log(errors);
-    //   });
+    axios
+      .put(`http://localhost:8000/user-data/${username}/`, { name: name })
+      .then((r) => {
+        console.log(r);
+
+        getExcludedIngredients();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  };
+
+  const removeExcludedIngredient = (name) => {
+    console.log(name);
+
+    axios
+      .delete(`http://localhost:8000/user-data/${username}/`, {
+        data: { name: name },
+      })
+      .then((r) => {
+        console.log(r);
+
+        getExcludedIngredients();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
   };
 
   return (
@@ -175,12 +203,13 @@ const Profile = () => {
         </Stack>
         <List>
           <Stack gap={1} alignItems={"center"}>
+            Excluded ingredients:
             <Select
               color={"danger"}
               placeholder="Ingredients"
               sx={{ minWidth: "12rem", maxWidth: "24rem" }}
             >
-              {ingredients?.map((name, index) => (
+              {excludedIngredients?.map((name, index) => (
                 <Option
                   key={name}
                   value={index}
@@ -192,12 +221,19 @@ const Profile = () => {
                 </Option>
               ))}
             </Select>
-            Excluded ingredients:
-            {userData?.excluded_ingredients?.map((ingredient) => (
-              <ListItem key={ingredient}>
-                {ingredient} <FaTrashAlt />
-              </ListItem>
-            ))}
+            {userData?.excluded_ingredients.length === 0
+              ? "You eat everything!"
+              : userData?.excluded_ingredients?.map((ingredient) => (
+                  <ListItem key={ingredient}>
+                    {ingredient}{" "}
+                    <FaTrashAlt
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        removeExcludedIngredient(ingredient);
+                      }}
+                    />
+                  </ListItem>
+                ))}
           </Stack>
         </List>
       </Card>

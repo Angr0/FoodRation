@@ -34,7 +34,6 @@ const RecipeCard = ({
           sx={{
             height: { xs: 100, md: 140 },
             width: { xs: 100, md: 140 },
-            backgroundColor: "lightgreen",
           }}
           src={iconUrl}
           title={name}

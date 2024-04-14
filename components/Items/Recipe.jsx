@@ -70,9 +70,10 @@ const Recipe = () => {
       if (fridgeItem)
         result.push({
           name: ingredient.ingredient,
-          quantity:
-            -Math.min(fridgeItem?.quantity, ingredient.quantity) *
-            (parseInt(portions) || 1),
+          quantity: -Math.min(
+            fridgeItem?.quantity,
+            ingredient.quantity * (parseInt(portions) || 1),
+          ),
         });
     });
 

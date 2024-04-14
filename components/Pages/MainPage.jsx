@@ -12,8 +12,9 @@ import FastAccessBox from "../Items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
+import { useSelector } from "react-redux";
 
-const MainPage = () => {
+const MainPage = ({ setOpenLogInModal }) => {
   const content = [
     {
       icon: <SpeedIcon sx={{ fontSize: "5rem" }} />,
@@ -35,6 +36,7 @@ const MainPage = () => {
     },
   ];
 
+  const username = useSelector((state) => state.user.username);
   const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -99,9 +101,12 @@ const MainPage = () => {
               ))}
           </Stack>
           <FastAccessBox
+            onClick={() => {
+              if (!username) setOpenLogInModal(true);
+            }}
             color={"primary"}
             variant={"solid"}
-            link={"/favourites"}
+            link={username && "/favourites"}
             icon={content[content.length - 1].icon}
             title={content[content.length - 1].title}
             text={content[content.length - 1].text}
