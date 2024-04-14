@@ -3,6 +3,16 @@ import { Card, Grid, Stack } from "@mui/joy";
 import { CardMedia } from "@mui/material";
 
 const CookingHistoryCard = ({ iconUrl, name, portions, date }) => {
+  const dateToFormat = new Date(date);
+
+  function formatNumber(num) {
+    if (num <= 9) {
+      return String(num).padStart(2, "0");
+    } else {
+      return String(num);
+    }
+  }
+
   return (
     <Card
       sx={{
@@ -24,8 +34,8 @@ const CookingHistoryCard = ({ iconUrl, name, portions, date }) => {
             <CardMedia
               component="img"
               sx={{
-                height: { xs: 50, md: 80 },
-                width: { xs: 50, md: 80 },
+                height: 80,
+                width: 80,
               }}
               src={iconUrl}
               title={name}
@@ -44,7 +54,11 @@ const CookingHistoryCard = ({ iconUrl, name, portions, date }) => {
         </Grid>
         <Grid xs={12} sm={3}>
           <Stack alignItems={"center"} justifyContent={"center"}>
-            Date: {date}
+            Date: {dateToFormat.getFullYear()}-
+            {formatNumber(dateToFormat.getMonth())}-
+            {formatNumber(dateToFormat.getDate())} /{" "}
+            {formatNumber(dateToFormat.getHours())}:
+            {formatNumber(dateToFormat.getMinutes())}
           </Stack>
         </Grid>
       </Grid>
