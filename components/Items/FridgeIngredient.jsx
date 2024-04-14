@@ -52,7 +52,7 @@ const FridgeIngredient = ({
           <span>
             {name}&nbsp;x&nbsp;{quantity} [{unit_name}]
           </span>
-          <Button onClick={deleteIngredient} color={"danger"}>
+          <Button onClick={deleteIngredient} color={"danger"} variant={"plain"}>
             <FaTrashAlt />
           </Button>
         </Stack>
