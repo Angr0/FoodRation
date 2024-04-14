@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Option, Select } from "@mui/joy";
+import { Autocomplete, AutocompleteOption } from "@mui/joy";
 import axios from "axios";
+import { matchSorter } from "match-sorter";
 
 const SelectIngredients = ({ setCurrentIngredient }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -10,20 +11,36 @@ const SelectIngredients = ({ setCurrentIngredient }) => {
     });
   }, []);
 
+  const filterOptions = (options, { inputValue }) =>
+    matchSorter(options, inputValue, { keys: ["name"] });
+
   return (
-    <Select
-      color={"danger"}
-      variant={"outlined"}
-      placeholder="Ingredients"
-      sx={{ minWidth: "12rem", maxWidth: "--max-width-mobile-content" }}
-      onChange={(_, newValue) => setCurrentIngredient(ingredients[newValue])}
-    >
-      {ingredients?.map(({ name }, index) => (
-        <Option key={name} value={index}>
-          {name}
-        </Option>
-      ))}
-    </Select>
+    <Autocomplete
+      variant="outlined"
+      color="primary"
+      placeholder={"Ingredients"}
+      autoHighlight
+      options={ingredients}
+      getOptionLabel={(option) => option.name}
+      onChange={(event, newValue) => {
+        setCurrentIngredient(newValue || {});
+      }}
+      renderOption={(props, option) => (
+        <AutocompleteOption color={"primary"} {...props}>
+          <img
+            src={option.icon_link}
+            alt={option.name}
+            style={{ width: "2.5rem" }}
+          />
+          {option.name}
+        </AutocompleteOption>
+      )}
+      sx={{
+        width: "100%",
+        maxWidth: "var(--max-width-mobile-content)",
+      }}
+      filterOptions={filterOptions}
+    />
   );
 };
 

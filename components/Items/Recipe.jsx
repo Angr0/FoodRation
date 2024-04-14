@@ -8,6 +8,7 @@ import { FaX } from "react-icons/fa6";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import decimalToFraction from "../../helper/decimalToFraction.js";
 
 const Recipe = () => {
   const username = useSelector((state) => state.user.username);
@@ -30,7 +31,6 @@ const Recipe = () => {
   useEffect(() => {
     axios.get(`http://localhost:8000/recipe/${recipeUrl}`).then(({ data }) => {
       setRecipe(data);
-      console.log(data);
     });
 
     if (username)
@@ -69,9 +69,10 @@ const Recipe = () => {
       if (fridgeItem)
         result.push({
           name: ingredient.ingredient,
-          quantity:
-            -Math.min(fridgeItem?.quantity, ingredient.quantity) *
-            parseInt(portions || 0),
+          quantity: -Math.min(
+            fridgeItem?.quantity,
+            ingredient.quantity * (parseInt(portions) || 1),
+          ),
         });
     });
 
@@ -128,9 +129,9 @@ const Recipe = () => {
           position: "relative",
         }}
       >
-        <Box sx={{ position: "absolute", top: "1rem", left: "1rem" }}>
+        <Box sx={{ position: "absolute", top: ".5rem", left: ".5rem" }}>
           <Link to={"/public_recipes"}>
-            <FaX p={2} />
+            <FaX p={0} color={"var(--joy-palette-danger-200)"} />
           </Link>
         </Box>
         {username && (
@@ -155,7 +156,9 @@ const Recipe = () => {
               justifyContent={"center"}
             >
               <b>{name?.toUpperCase()}</b>
-              {is_warm ? <FaMugHot /> : <FaRegSnowflake />}
+              <span style={{ width: "1rem" }}>
+                {is_warm ? <FaMugHot /> : <FaRegSnowflake />}
+              </span>
             </Stack>
             <CardMedia
               component="img"
@@ -181,7 +184,8 @@ const Recipe = () => {
               Ingredients:
               {ingredients?.map(({ ingredient, quantity, unit }) => (
                 <ListItem key={ingredient}>
-                  {ingredient} x {quantity * (watch("portions") || 1)} [{unit}]
+                  {decimalToFraction(quantity * (watch("portions") || 1))}{" "}
+                  {unit} {ingredient?.toLowerCase()}
                 </ListItem>
               ))}
             </List>

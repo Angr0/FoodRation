@@ -23,7 +23,9 @@ const FridgeIngredient = ({
         axios
           .get(`http://localhost:8000/fridge/${username}/`)
           .then(({ data }) => {
-            setFridgeIngredients(data);
+            setFridgeIngredients(
+              data.filter((fridgeIngredient) => fridgeIngredient?.quantity > 0),
+            );
           });
       });
   };
@@ -36,7 +38,6 @@ const FridgeIngredient = ({
           sx={{
             height: 32,
             width: 32,
-            backgroundColor: "lightgreen",
           }}
           image={iconUrl}
           title={name}
@@ -51,7 +52,7 @@ const FridgeIngredient = ({
           <span>
             {name}&nbsp;x&nbsp;{quantity} [{unit_name}]
           </span>
-          <Button onClick={deleteIngredient} color={"danger"}>
+          <Button onClick={deleteIngredient} color={"danger"} variant={"plain"}>
             <FaTrashAlt />
           </Button>
         </Stack>

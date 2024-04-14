@@ -57,6 +57,16 @@ const Fridge = () => {
       });
   };
 
+  const clearFridge = () => {
+    axios
+      .delete(`http://localhost:8000/clear-fridge/${username}/`)
+      .then((r) => {
+        console.log(r);
+
+        setIngredients();
+      });
+  };
+
   return (
     <Stack direction={"row"} justifyContent={"center"}>
       <Stack
@@ -112,7 +122,7 @@ const Fridge = () => {
           </Grid>
         </form>
         {fridgeIngredients.length === 0 ? (
-          "Your fridge is empty :("
+          "Not empty again!"
         ) : (
           <Stack
             direction={"row"}
@@ -134,6 +144,11 @@ const Fridge = () => {
               ),
             )}
           </Stack>
+        )}
+        {fridgeIngredients?.length !== 0 && (
+          <Button color={"danger"} onClick={clearFridge}>
+            Clear whole fridge
+          </Button>
         )}
       </Stack>
     </Stack>

@@ -26,6 +26,8 @@ const Categories = ({ style = {}, value, setValue, setAllCategories }) => {
       color="danger"
       sx={{
         ...style,
+        display: "flex",
+        flexWrap: "wrap",
       }}
     >
       {flavours?.map((taste) => (

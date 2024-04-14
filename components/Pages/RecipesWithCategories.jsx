@@ -16,6 +16,7 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   const [dishTemperature, setDishTemperature] = useState([]);
   const [dishFlavour, setDishFlavour] = useState([]);
   const [dishCategory, setDishCategory] = useState([]);
+  const filters = useSelector((state) => state.user.filters);
   const [allCategories, setAllCategories] = useState({
     temperature: [],
     flavour: [],
@@ -24,41 +25,47 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!username && link !== "http://localhost:8000/recipes/") {
-      navigate("/");
-      return;
-    }
-
-    setLoading(true);
-    axios.get(link).then(({ data }) => {
-      setRecipes(data);
-      setLoading(false);
-    });
-  }, [link, navigate, username]);
-
   const filterRecipes = useCallback(() => {
     setDisplayedRecipes(
       recipes.filter(
         (recipe) =>
+          allCategories.category.every((item) =>
+            recipe.categories.includes(item),
+          ) &&
+          allCategories.flavour.every((item) =>
+            recipe.flavours.includes(item),
+          ) &&
           (allCategories.temperature.length === 0
             ? true
             : allCategories.temperature.some((temperature) => {
                 if (allCategories.temperature.length === 0) return true;
                 const warmDish = recipe?.is_warm ? "hot" : "cold";
                 return temperature === warmDish;
-              })) &&
-          recipe.flavours.some((flavour) => {
-            if (allCategories.flavour.length === 0) return true;
-            return allCategories.flavour.includes(flavour);
-          }) &&
-          recipe.categories.some((category) => {
-            if (allCategories.category.length === 0) return true;
-            return allCategories.category.includes(category);
-          }),
+              })),
       ),
     );
   }, [allCategories, recipes]);
+
+  useEffect(() => {
+    if (!username && link !== "http://localhost:8000/recipes/") {
+      navigate("/");
+      return;
+    }
+
+    setDishCategory(filters.category);
+    setDishFlavour(filters.flavour);
+    setAllCategories({
+      temperature: [],
+      flavour: filters.flavour,
+      category: filters.category,
+    });
+
+    setLoading(true);
+    axios.get(link).then(({ data }) => {
+      setRecipes(data);
+      setLoading(false);
+    });
+  }, [filters.category, filters.flavour, link, navigate, username]);
 
   useEffect(() => {
     filterRecipes();

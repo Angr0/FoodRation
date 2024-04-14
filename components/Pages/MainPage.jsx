@@ -12,31 +12,38 @@ import FastAccessBox from "../Items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
+import { useDispatch, useSelector } from "react-redux";
+import { setFiltersCategory } from "../../redux/userSlice.js";
 
-const MainPage = () => {
+const MainPage = ({ setOpenLogInModal }) => {
   const content = [
     {
       icon: <SpeedIcon sx={{ fontSize: "5rem" }} />,
       title: "Fast Recipe",
       text: "I don't have much time, so I need a dish that can be quickly prepared and cooked.",
       big: false,
+      filter: ["Quick"],
     },
     {
       icon: <FitnessCenterIcon sx={{ fontSize: "5rem" }} />,
       title: "Fit dish",
       text: "I'm looking for a recipe that is healthy, has good macros, and is rich in vitamins.",
       big: false,
+      filter: ["Fit"],
     },
     {
       icon: <FavoriteBorderIcon sx={{ fontSize: "5rem" }} />,
       title: "Favourites",
       text: "Treat yourself to tantalizing flavors with our limited-time offer!",
       big: true,
+      filter: [],
     },
   ];
 
+  const username = useSelector((state) => state.user.username);
   const [autoCompleteOptions, setAutocompleteOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   function getRecipesToSearch() {
     setLoading(true);
@@ -65,10 +72,11 @@ const MainPage = () => {
           placeholder={"Find your recipe"}
           options={autoCompleteOptions}
           getOptionLabel={(option) => option.name}
-          renderOption={(props, option) => (
-            <Link to={`/recipe/${option.name}`} key={option.name}>
+          renderOption={(props, { name, icon_link }) => (
+            <Link to={`/recipe/${name}`} key={name}>
               <AutocompleteOption color={"primary"} {...props}>
-                {option.name}
+                <img src={icon_link} alt={name} style={{ width: "2.5rem" }} />
+                {name}
               </AutocompleteOption>
             </Link>
           )}
@@ -88,20 +96,26 @@ const MainPage = () => {
           >
             {content
               .slice(0, content.length - 1)
-              ?.map(({ icon, title, text, big }, index) => (
+              ?.map(({ icon, title, text, big, filter }, index) => (
                 <FastAccessBox
                   key={index}
                   icon={icon}
                   title={title}
                   text={text}
                   big={big}
+                  onClick={() => {
+                    dispatch(setFiltersCategory(filter));
+                  }}
                 />
               ))}
           </Stack>
           <FastAccessBox
+            onClick={() => {
+              if (!username) setOpenLogInModal(true);
+            }}
             color={"primary"}
             variant={"solid"}
-            link={"/favourites"}
+            link={username && "/favourites"}
             icon={content[content.length - 1].icon}
             title={content[content.length - 1].title}
             text={content[content.length - 1].text}

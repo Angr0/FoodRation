@@ -10,8 +10,8 @@ import {
   FormLabel,
   FormControl,
   Divider,
-  Option,
-  Select,
+  AutocompleteOption,
+  Autocomplete,
 } from "@mui/joy";
 import { FaTrashAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -19,6 +19,7 @@ import BioChangeInput from "../Items/BioChangeInput.jsx";
 import { useForm } from "react-hook-form";
 import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { matchSorter } from "match-sorter";
 
 const Profile = () => {
   const username = useSelector((state) => state.user.username);
@@ -26,7 +27,7 @@ const Profile = () => {
   const [userData, setUserData] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [ingredients, setIngredients] = useState();
+  const [excludedIngredients, setExcludedIngredients] = useState([]);
   const navigate = useNavigate();
 
   const openSnackbar = () => {
@@ -41,26 +42,35 @@ const Profile = () => {
     setSnackbarOpen(false);
   };
 
+  const getExcludedIngredients = () => {
+    axios
+      .get(`http://localhost:8000/without-excluded/${username}/`)
+      .then(({ data }) => {
+        setExcludedIngredients(data);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+
+    getUserData();
+  };
+
+  const getUserData = () => {
+    axios
+      .get(`http://localhost:8000/user-data/${username}/`)
+      .then(({ data }) => {
+        setUserData(data);
+      });
+  };
+
   useEffect(() => {
     if (!username) {
       navigate("/");
       return;
     }
 
-    axios
-      .get(`http://localhost:8000/without-excluded/${username}/`)
-      .then(({ data }) => {
-        setIngredients(data);
-      })
-      .catch((errors) => {
-        console.log(errors);
-      });
-
-    axios
-      .get(`http://localhost:8000/user-data/${username}/`)
-      .then(({ data }) => {
-        setUserData(data);
-      });
+    getExcludedIngredients();
+    getUserData();
 
     axios
       .get(`http://localhost:8000/bio-calc/${username}/`)
@@ -115,17 +125,35 @@ const Profile = () => {
   };
 
   const addExcludedIngredient = (name) => {
-    console.log(name);
+    axios
+      .put(`http://localhost:8000/user-data/${username}/`, { name: name })
+      .then((r) => {
+        console.log(r);
 
-    // axios
-    //   .put(``, {})
-    //   .then((r) => {
-    //     console.log(r);
-    //   })
-    //   .catch((errors) => {
-    //     console.log(errors);
-    //   });
+        getExcludedIngredients();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
   };
+
+  const removeExcludedIngredient = (name) => {
+    axios
+      .delete(`http://localhost:8000/user-data/${username}/`, {
+        data: { name: name },
+      })
+      .then((r) => {
+        console.log(r);
+
+        getExcludedIngredients();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  };
+
+  const filterOptions = (options, { inputValue }) =>
+    matchSorter(options, inputValue, { keys: ["name"] });
 
   return (
     <Stack direction={"row"} justifyContent="center" gap={4} mt={2} mb={4}>
@@ -175,29 +203,50 @@ const Profile = () => {
         </Stack>
         <List>
           <Stack gap={1} alignItems={"center"}>
-            <Select
-              color={"danger"}
-              placeholder="Ingredients"
-              sx={{ minWidth: "12rem", maxWidth: "24rem" }}
-            >
-              {ingredients?.map((name, index) => (
-                <Option
-                  key={name}
-                  value={index}
-                  onClick={() => {
-                    addExcludedIngredient(name);
-                  }}
-                >
-                  {name}
-                </Option>
-              ))}
-            </Select>
             Excluded ingredients:
-            {userData?.excluded_ingredients?.map((ingredient) => (
-              <ListItem key={ingredient}>
-                {ingredient} <FaTrashAlt />
-              </ListItem>
-            ))}
+            <Autocomplete
+              freeSolo
+              disableClearable
+              variant="outlined"
+              color="danger"
+              placeholder={"Find your recipe"}
+              options={excludedIngredients}
+              getOptionLabel={(option) => option.name}
+              onChange={(event, option) => {
+                addExcludedIngredient(option?.name || "");
+              }}
+              renderOption={(props, { name, icon_link }) => (
+                <AutocompleteOption color={"danger"} {...props}>
+                  <img src={icon_link} alt={name} style={{ width: "2.5rem" }} />
+                  {name}
+                </AutocompleteOption>
+              )}
+              sx={{
+                width: "100%",
+                maxWidth: "var(--max-width-mobile-content)",
+              }}
+              filterOptions={filterOptions}
+            />
+            {userData?.excluded_ingredients.length === 0
+              ? "You eat everything!"
+              : userData?.excluded_ingredients?.map(({ name, icon_link }) => {
+                  return (
+                    <ListItem key={name}>
+                      <img
+                        src={icon_link}
+                        alt={name}
+                        style={{ width: "2rem" }}
+                      />
+                      {name}{" "}
+                      <FaTrashAlt
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          removeExcludedIngredient(name);
+                        }}
+                      />
+                    </ListItem>
+                  );
+                })}
           </Stack>
         </List>
       </Card>

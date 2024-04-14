@@ -2,7 +2,7 @@ import { Box, Stack } from "@mui/joy";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "../components/Pages/MainPage.jsx";
 import Header from "../components/Header.jsx";
-import React from "react";
+import React, { useState } from "react";
 import Recipe from "../components/Items/Recipe.jsx";
 import Fridge from "../components/Pages/Fridge.jsx";
 import Profile from "../components/Pages/Profile.jsx";
@@ -15,6 +15,8 @@ import CookingHistory from "../components/Pages/CookingHistory.jsx";
 
 function App() {
   const username = useSelector((state) => state.user.username);
+  const [openLogInModal, setOpenLogInModal] = useState(false);
+  const [openSignUpModal, setOpenSignUpModal] = useState(false);
 
   store.subscribe(() => {
     saveState({
@@ -24,7 +26,12 @@ function App() {
 
   return (
     <Stack alignItems="center" sx={{ width: "100vw" }}>
-      <Header />
+      <Header
+        openLogInModal={openLogInModal}
+        setOpenLogInModal={setOpenLogInModal}
+        openSignUpModal={openSignUpModal}
+        setOpenSignUpModal={setOpenSignUpModal}
+      />
 
       <Box
         sx={{
@@ -34,7 +41,10 @@ function App() {
         }}
       >
         <Routes>
-          <Route index element={<MainPage />} />
+          <Route
+            index
+            element={<MainPage setOpenLogInModal={setOpenLogInModal} />}
+          />
 
           <Route
             path="menu"

@@ -3,6 +3,7 @@ import { Card, Stack } from "@mui/joy";
 import { Link } from "react-router-dom";
 
 const FastAccessBox = ({
+  onClick = () => {},
   icon,
   title,
   text,
@@ -16,7 +17,7 @@ const FastAccessBox = ({
   const size = big ? bigSize : defaultSize;
 
   return (
-    <Link to={link}>
+    <Link to={link} onClick={onClick}>
       <Card
         color={color}
         variant={variant}
