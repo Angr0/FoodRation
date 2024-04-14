@@ -3,12 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { Card, Box, List, ListItem, Stack, Button, Input } from "@mui/joy";
 import axios from "axios";
 import { Alert, CardContent, CardMedia, Snackbar } from "@mui/material";
-import { FaMugHot, FaRegSnowflake, FaStar } from "react-icons/fa";
+import { FaMugHot, FaRegSnowflake } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import decimalToFraction from "../../helper/decimalToFraction.js";
+import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
 
 const Recipe = () => {
   const username = useSelector((state) => state.user.username);
@@ -17,6 +18,7 @@ const Recipe = () => {
   const [recipe, setRecipe] = useState({});
   const [fridge, setFridge] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarOptions, setSnackbarOptions] = useState({});
   const {
     name,
     is_warm,
@@ -45,17 +47,33 @@ const Recipe = () => {
   }, [recipeUrl, username]);
 
   const likeRecipe = () => {
-    console.log(name);
-    // axios
-    //   .post(`http://localhost:8000/favourite-recipes/${username}/`, {
-    //     name: "spaghetti",
-    //   })
-    //   .then((r) => {
-    //     console.log(r);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(`http://localhost:8000/favourite-recipes/${username}/`, {
+        name: name,
+      })
+      .then((r) => {
+        console.log(r);
+        openSnackbar("Liked recipe!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const dislikeRecipe = () => {
+    axios
+      .delete(`http://localhost:8000/favourite-recipes/${username}/`, {
+        data: {
+          name: name,
+        },
+      })
+      .then((r) => {
+        console.log(r);
+        openSnackbar("Disliked recipe!", "warning");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getReversedQuantities = (portions) => {
@@ -79,8 +97,9 @@ const Recipe = () => {
     return result;
   };
 
-  const openSnackbar = () => {
+  const openSnackbar = (message, variant = "success") => {
     setSnackbarOpen(true);
+    setSnackbarOptions({ name: message, variant: variant });
   };
 
   const closeSnackbar = (event, reason) => {
@@ -99,7 +118,7 @@ const Recipe = () => {
       )
       .then((r) => {
         console.log(r);
-        openSnackbar();
+        openSnackbar("Let me cook! 🫡");
       })
       .catch((errors) => {
         console.log(errors);
@@ -135,7 +154,9 @@ const Recipe = () => {
           </Link>
         </Box>
         {username && (
-          <Box
+          <Stack
+            direction={"row"}
+            gap={2}
             sx={{
               position: "absolute",
               top: "1rem",
@@ -143,8 +164,13 @@ const Recipe = () => {
               cursor: "pointer",
             }}
           >
-            <FaStar p={2} onClick={likeRecipe} />
-          </Box>
+            <BiSolidLike p={2} onClick={likeRecipe} color={"lightgreen"} />
+            <BiSolidDislike
+              p={2}
+              onClick={dislikeRecipe}
+              color={"lightcoral"}
+            />
+          </Stack>
         )}
         <CardContent>
           <Stack gap={2}>
@@ -230,10 +256,10 @@ const Recipe = () => {
       >
         <Alert
           onClose={closeSnackbar}
-          severity="success"
+          severity={snackbarOptions.variant}
           sx={{ width: "100%" }}
         >
-          Let me cook! 🫡
+          {snackbarOptions.name}
         </Alert>
       </Snackbar>
     </Stack>
