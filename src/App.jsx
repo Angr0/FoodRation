@@ -11,6 +11,7 @@ import { saveState } from "./localStorage.js";
 import Calculator from "../components/Pages/Calculator.jsx";
 import RecipesWithCategories from "../components/Pages/RecipesWithCategories.jsx";
 import { useSelector } from "react-redux";
+import CookingHistory from "../components/Pages/CookingHistory.jsx";
 
 function App() {
   const username = useSelector((state) => state.user.username);
@@ -66,7 +67,7 @@ function App() {
           />
 
           <Route path="calculator" element={<Calculator />} />
-          <Route path="cooking_history" element={<div>cooking_history</div>} />
+          <Route path="cooking_history" element={<CookingHistory />} />
           <Route path="fridge" element={<Fridge />} />
 
           <Route path=":userNameUrl" element={<Profile />} />
