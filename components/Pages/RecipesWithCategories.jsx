@@ -41,21 +41,19 @@ const RecipesWithCategories = ({ link = "http://localhost:8000/recipes/" }) => {
     setDisplayedRecipes(
       recipes.filter(
         (recipe) =>
+          allCategories.category.every((item) =>
+            recipe.categories.includes(item),
+          ) &&
+          allCategories.flavour.every((item) =>
+            recipe.flavours.includes(item),
+          ) &&
           (allCategories.temperature.length === 0
             ? true
             : allCategories.temperature.some((temperature) => {
                 if (allCategories.temperature.length === 0) return true;
                 const warmDish = recipe?.is_warm ? "hot" : "cold";
                 return temperature === warmDish;
-              })) &&
-          recipe.flavours.some((flavour) => {
-            if (allCategories.flavour.length === 0) return true;
-            return allCategories.flavour.includes(flavour);
-          }) &&
-          recipe.categories.some((category) => {
-            if (allCategories.category.length === 0) return true;
-            return allCategories.category.includes(category);
-          }),
+              })),
       ),
     );
   }, [allCategories, recipes]);
