@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Grid, Stack } from "@mui/joy";
-import { CardContent, CardMedia } from "@mui/material";
+import { CardMedia } from "@mui/material";
 
 const CookingHistoryCard = ({ iconUrl, name, portions, date }) => {
   return (
@@ -8,35 +8,46 @@ const CookingHistoryCard = ({ iconUrl, name, portions, date }) => {
       sx={{
         display: "flex",
         flexDirection: "row",
-        marginTop: 2,
         width: { sm: "var(--max-width-main-content)" },
       }}
     >
-      <CardContent sx={{ width: "100%" }}>
-        <Grid container sx={{ width: "100%" }} rowSpacing={1} width={"100%"}>
-          <Grid xs={12} sm={3} justifyContent={"center"} alignItems={"center"}>
+      <Grid
+        container
+        sx={{ width: "100%" }}
+        width={"100%"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        gap={{ xs: 1, sm: 0 }}
+      >
+        <Grid xs={12} sm={3}>
+          <Stack alignItems={"center"} justifyContent={"center"}>
             <CardMedia
               component="img"
               sx={{
                 height: { xs: 50, md: 80 },
                 width: { xs: 50, md: 80 },
-                backgroundColor: "lightgreen",
               }}
               src={iconUrl}
               title={name}
             />
-          </Grid>
-          <Grid xs={6} sm={3}>
-            {name?.toUpperCase()}
-          </Grid>
-          <Grid xs={6} sm={3}>
-            Portions: {portions}
-          </Grid>
-          <Grid xs={12} sm={3}>
-            Cooking Date: {date}
-          </Grid>
+          </Stack>
         </Grid>
-      </CardContent>
+        <Grid xs={12} sm={3}>
+          <Stack alignItems={"center"} justifyContent={"center"}>
+            {name?.toUpperCase()}
+          </Stack>
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <Stack alignItems={"center"} justifyContent={"center"}>
+            Portions: {portions}
+          </Stack>
+        </Grid>
+        <Grid xs={12} sm={3}>
+          <Stack alignItems={"center"} justifyContent={"center"}>
+            Date: {date}
+          </Stack>
+        </Grid>
+      </Grid>
     </Card>
   );
 };
