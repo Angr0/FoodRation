@@ -251,6 +251,8 @@ const Recipe = () => {
             <footer>author: {author_login}</footer>
             <Stack direction={{ sm: "row" }} gap={1} alignItems={"center"}>
               <Input
+                color="danger"
+                variant="soft"
                 type={"number"}
                 {...register("portions")}
                 slotProps={{ input: { min: 1 } }}

@@ -17,7 +17,7 @@ const SelectIngredients = ({ setCurrentIngredient }) => {
   return (
     <Autocomplete
       variant="outlined"
-      color="primary"
+      color="danger"
       placeholder={"Ingredients"}
       autoHighlight
       options={ingredients}

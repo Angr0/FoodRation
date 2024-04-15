@@ -59,11 +59,11 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: var(--joy-palette-primary-50);
+    background: var(--joy-palette-danger-50);
     border-radius: 25px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--joy-palette-primary-200);
+    background: var(--joy-palette-danger-200);
 }

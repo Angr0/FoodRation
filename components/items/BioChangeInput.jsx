@@ -12,6 +12,8 @@ const BioChangeInput = ({ label, register }) => {
       >
         <p>{label}:</p>
         <Input
+          color="danger"
+          variant="soft"
           type={"number"}
           sx={{ maxWidth: "5rem" }}
           slotProps={{ input: { min: 1 } }}

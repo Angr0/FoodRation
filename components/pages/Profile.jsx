@@ -184,11 +184,19 @@ const Profile = () => {
             <Stack gap={1}>
               <FormControl>
                 <FormLabel>New password</FormLabel>
-                <Input required type={"password"} {...register("password")} />
+                <Input
+                  color="danger"
+                  variant="soft"
+                  required
+                  type={"password"}
+                  {...register("password")}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Repeat new password</FormLabel>
                 <Input
+                  color="danger"
+                  variant="soft"
                   required
                   type={"password"}
                   {...register("newPassword")}
