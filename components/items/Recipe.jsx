@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Card, Box, List, ListItem, Stack, Button, Input } from "@mui/joy";
 import axios from "axios";
 import { Alert, CardContent, CardMedia, Snackbar } from "@mui/material";
-import { FaMugHot, FaRegSnowflake } from "react-icons/fa";
+import { FaHeart, FaMugHot, FaRegHeart, FaRegSnowflake } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import ComaWithoutLast from "./ComaWithoutLast.jsx";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import decimalToFraction from "../../helper/decimalToFraction.js";
-import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
 
 const Recipe = () => {
   const username = useSelector((state) => state.user.username);
@@ -19,6 +18,7 @@ const Recipe = () => {
   const [fridge, setFridge] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarOptions, setSnackbarOptions] = useState({});
+  const [isFavourite, setIsFavourite] = useState(false);
   const {
     name,
     is_warm,
@@ -30,12 +30,32 @@ const Recipe = () => {
     type_name,
   } = recipe;
 
+  const getIsFavourite = useCallback(
+    (name) => {
+      axios
+        .post(`http://localhost:8000/favourite-check/`, {
+          user_login: username,
+          recipe: name,
+        })
+        .then(({ data: { is_favourite } }) => {
+          console.log(is_favourite);
+          setIsFavourite(is_favourite);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
+    [username],
+  );
+
   useEffect(() => {
     axios.get(`http://localhost:8000/recipe/${recipeUrl}`).then(({ data }) => {
       setRecipe(data);
+
+      if (username) getIsFavourite(data?.name);
     });
 
-    if (username)
+    if (username) {
       axios
         .get(`http://localhost:8000/fridge/${username}/`)
         .then(({ data }) => {
@@ -44,7 +64,8 @@ const Recipe = () => {
         .catch((errors) => {
           console.log(errors);
         });
-  }, [recipeUrl, username]);
+    }
+  }, [getIsFavourite, name, recipeUrl, username]);
 
   const likeRecipe = () => {
     axios
@@ -54,6 +75,7 @@ const Recipe = () => {
       .then((r) => {
         console.log(r);
         openSnackbar("Liked recipe!");
+        getIsFavourite(name);
       })
       .catch((err) => {
         console.log(err);
@@ -70,6 +92,7 @@ const Recipe = () => {
       .then((r) => {
         console.log(r);
         openSnackbar("Disliked recipe!", "warning");
+        getIsFavourite(name);
       })
       .catch((err) => {
         console.log(err);
@@ -184,12 +207,17 @@ const Recipe = () => {
               cursor: "pointer",
             }}
           >
-            <BiSolidLike p={2} onClick={likeRecipe} color={"lightgreen"} />
-            <BiSolidDislike
-              p={2}
-              onClick={dislikeRecipe}
-              color={"lightcoral"}
-            />
+            {isFavourite ? (
+              <FaHeart onClick={dislikeRecipe} />
+            ) : (
+              <FaRegHeart onClick={likeRecipe} />
+            )}
+            {/*<BiSolidLike p={2} onClick={likeRecipe} color={"lightgreen"} />*/}
+            {/*<BiSolidDislike*/}
+            {/*  p={2}*/}
+            {/*  onClick={dislikeRecipe}*/}
+            {/*  color={"lightcoral"}*/}
+            {/*/>*/}
           </Stack>
         )}
         <CardContent>
