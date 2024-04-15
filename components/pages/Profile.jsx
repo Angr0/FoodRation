@@ -166,7 +166,7 @@ const Profile = () => {
         >
           <Stack gap={1}>
             <p>Login: {userData?.login}</p>
-            <p>Sex: {userData?.is_male ? "male" : "female"}</p>
+            <p>Gender: {userData?.is_male ? "male" : "female"}</p>
           </Stack>
           <Divider color={"primary"} />
           <form onSubmit={handleSubmit(saveBio)}>

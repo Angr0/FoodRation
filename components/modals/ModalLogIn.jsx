@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -18,6 +18,10 @@ const ModalLogIn = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [open]);
 
   const logIn = (logInData) => {
     axios
@@ -46,7 +50,12 @@ const ModalLogIn = ({ open, setOpen }) => {
           <ModalClose />
           <FormControl>
             <FormLabel>Login</FormLabel>
-            <Input color="danger" variant="soft" required {...register("login")} />
+            <Input
+              color="danger"
+              variant="soft"
+              required
+              {...register("login")}
+            />
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>

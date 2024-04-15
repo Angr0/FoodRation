@@ -38,7 +38,6 @@ const Recipe = () => {
           recipe: name,
         })
         .then(({ data: { is_favourite } }) => {
-          console.log(is_favourite);
           setIsFavourite(is_favourite);
         })
         .catch((errors) => {
@@ -212,12 +211,6 @@ const Recipe = () => {
             ) : (
               <FaRegHeart onClick={likeRecipe} />
             )}
-            {/*<BiSolidLike p={2} onClick={likeRecipe} color={"lightgreen"} />*/}
-            {/*<BiSolidDislike*/}
-            {/*  p={2}*/}
-            {/*  onClick={dislikeRecipe}*/}
-            {/*  color={"lightcoral"}*/}
-            {/*/>*/}
           </Stack>
         )}
         <CardContent>
@@ -289,16 +282,20 @@ const Recipe = () => {
                 defaultValue={1}
                 sx={{ maxWidth: "6rem" }}
               />
-              <Button color={"danger"} onClick={handleSubmit(cookedMeal)}>
-                Cooked!
-              </Button>
-              <Button
-                color={"danger"}
-                variant={"outlined"}
-                onClick={handleSubmit(addToShoppingList)}
-              >
-                Add to shopping list
-              </Button>
+              {username && (
+                <>
+                  <Button color={"danger"} onClick={handleSubmit(cookedMeal)}>
+                    Cooked!
+                  </Button>
+                  <Button
+                    color={"danger"}
+                    variant={"outlined"}
+                    onClick={handleSubmit(addToShoppingList)}
+                  >
+                    Add to shopping list
+                  </Button>
+                </>
+              )}
             </Stack>
           </Stack>
         </CardContent>

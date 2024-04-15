@@ -66,7 +66,11 @@ const ModalSignUp = ({ open, setOpen }) => {
           <Stack gap={2}>
             <FormControl>
               <FormLabel>Login</FormLabel>
-              <Input color="danger" variant="soft" {...register("login", { required: true })} />
+              <Input
+                color="danger"
+                variant="soft"
+                {...register("login", { required: true })}
+              />
             </FormControl>
             <FormControl>
               <FormLabel sx={{ color: !samePasswords ? "red" : "" }}>
@@ -92,7 +96,7 @@ const ModalSignUp = ({ open, setOpen }) => {
             </FormControl>
             {!samePasswords && <span>Not the same passwords</span>}
             <FormControl>
-              <FormLabel>Sex</FormLabel>
+              <FormLabel>Gender</FormLabel>
               <RadioGroup defaultValue={"male"}>
                 <Radio
                   value={"male"}
