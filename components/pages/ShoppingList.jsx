@@ -17,7 +17,6 @@ const ShoppingList = () => {
     axios
       .get(`http://localhost:8000/shopping-list/${username}/`)
       .then(({ data }) => {
-        console.log(data);
         setLoading(false);
         setShoppingList(data);
       })
@@ -62,8 +61,6 @@ const ShoppingList = () => {
   };
 
   const addIngredientToFridge = (name) => {
-    console.log(name);
-
     axios
       .delete(`http://localhost:8000/tick-ingredient/${username}/`, {
         data: [name],

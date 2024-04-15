@@ -13,7 +13,7 @@ const Fridge = () => {
   const username = useSelector((state) => state.user.username);
   const [fridgeIngredients, setFridgeIngredients] = useState([]);
   const [currentIngredient, setCurrentIngredient] = useState({});
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
 
   const setIngredients = useCallback(() => {
@@ -107,11 +107,16 @@ const Fridge = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <SelectIngredients setCurrentIngredient={setCurrentIngredient} />
+              <SelectIngredients
+                setCurrentIngredient={setCurrentIngredient}
+                setNumberValue={setValue}
+              />
             </Grid>
 
             <Grid xs={3} sm={2}>
               <Input
+                color={"danger"}
+                variant={"plain"}
                 type="number"
                 defaultValue={1}
                 {...register("quantity")}

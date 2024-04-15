@@ -8,7 +8,7 @@ import ModalLogIn from "./modals/ModalLogIn.jsx";
 import ModalSignUp from "./modals/ModalSignUp.jsx";
 import MobileMenu from "./items/MobileMenu.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsername } from "../redux/userSlice.js";
+import { setFiltersCategory, setUsername } from "../redux/userSlice.js";
 
 const Header = ({
   openLogInModal,
@@ -110,7 +110,14 @@ const Header = ({
               return (
                 <Link to={link} key={text}>
                   <ListItem>
-                    <Button variant={"plain"} color="neutral">
+                    <Button
+                      variant={"plain"}
+                      color="neutral"
+                      onClick={() => {
+                        if (link === "/public_recipes")
+                          dispatch(setFiltersCategory([]));
+                      }}
+                    >
                       {text}
                     </Button>
                   </ListItem>

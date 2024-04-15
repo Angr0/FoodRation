@@ -111,6 +111,7 @@ const MainPage = ({ setOpenLogInModal }) => {
           </Stack>
           <FastAccessBox
             onClick={() => {
+              dispatch(setFiltersCategory(content[content.length - 1].filter));
               if (!username) setOpenLogInModal(true);
             }}
             color={"primary"}

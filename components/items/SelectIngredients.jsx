@@ -3,7 +3,7 @@ import { Autocomplete, AutocompleteOption } from "@mui/joy";
 import axios from "axios";
 import { matchSorter } from "match-sorter";
 
-const SelectIngredients = ({ setCurrentIngredient }) => {
+const SelectIngredients = ({ setCurrentIngredient, setNumberValue }) => {
   const [ingredients, setIngredients] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8000/all-ingredients/").then(({ data }) => {
@@ -24,6 +24,7 @@ const SelectIngredients = ({ setCurrentIngredient }) => {
       getOptionLabel={(option) => option.name}
       onChange={(event, newValue) => {
         setCurrentIngredient(newValue || {});
+        setNumberValue("quantity", 1);
       }}
       renderOption={(props, option) => (
         <AutocompleteOption color={"primary"} {...props}>
