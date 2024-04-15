@@ -1,18 +1,19 @@
 import { Box, Stack } from "@mui/joy";
 import { Route, Routes } from "react-router-dom";
-import MainPage from "../components/Pages/MainPage.jsx";
+import MainPage from "../components/pages/MainPage.jsx";
 import Header from "../components/Header.jsx";
 import React, { useState } from "react";
-import Recipe from "../components/Items/Recipe.jsx";
-import Fridge from "../components/Pages/Fridge.jsx";
-import Profile from "../components/Pages/Profile.jsx";
+import Recipe from "../components/items/Recipe.jsx";
+import Fridge from "../components/pages/Fridge.jsx";
+import Profile from "../components/pages/Profile.jsx";
 import { store } from "../redux/store.js";
 import { saveState } from "./localStorage.js";
-import Calculator from "../components/Pages/Calculator.jsx";
-import RecipesWithCategories from "../components/Pages/RecipesWithCategories.jsx";
+import Calculator from "../components/pages/Calculator.jsx";
+import RecipesWithCategories from "../components/pages/RecipesWithCategories.jsx";
 import { useSelector } from "react-redux";
-import CookingHistory from "../components/Pages/CookingHistory.jsx";
-import ErrorPage from "../components/Pages/ErrorPage.jsx";
+import CookingHistory from "../components/pages/CookingHistory.jsx";
+import ErrorPage from "../components/pages/ErrorPage.jsx";
+import ShoppingList from "../components/pages/ShoppingList.jsx";
 
 function App() {
   const username = useSelector((state) => state.user.username);
@@ -72,13 +73,12 @@ function App() {
           <Route
             path="recipe/:recipeUrl"
             element={<Recipe />}
-            loader={({ params }) => {
-              params.recipeUrl;
-            }}
+            loader={({ params }) => params.recipeUrl}
           />
 
           <Route path="calculator" element={<Calculator />} />
           <Route path="cooking_history" element={<CookingHistory />} />
+          <Route path="shopping_list" element={<ShoppingList />} />
           <Route path="fridge" element={<Fridge />} />
 
           <Route path=":userNameUrl" element={<Profile />} />

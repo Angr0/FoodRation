@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Input, Stack } from "@mui/joy";
-import FridgeIngredient from "../Items/FridgeIngredient.jsx";
+import IngredientsCard from "../items/IngredientsCard.jsx";
 import { HiPlus } from "react-icons/hi";
 import axios from "axios";
-import SelectIngredients from "../Items/SelectIngredients.jsx";
+import SelectIngredients from "../items/SelectIngredients.jsx";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +54,22 @@ const Fridge = () => {
       })
       .catch((errors) => {
         console.log(errors);
+      });
+  };
+
+  const deleteIngredient = (name) => {
+    axios
+      .delete(`http://localhost:8000/fridge/${username}/`, { data: [name] })
+      .then((r) => {
+        console.log(r);
+
+        axios
+          .get(`http://localhost:8000/fridge/${username}/`)
+          .then(({ data }) => {
+            setFridgeIngredients(
+              data.filter((fridgeIngredient) => fridgeIngredient?.quantity > 0),
+            );
+          });
       });
   };
 
@@ -133,13 +149,13 @@ const Fridge = () => {
           >
             {fridgeIngredients.map(
               ({ ingredient_name, quantity, icon_link, unit_name }) => (
-                <FridgeIngredient
+                <IngredientsCard
                   key={ingredient_name}
                   name={ingredient_name}
                   quantity={quantity}
                   iconUrl={icon_link}
                   unit_name={unit_name}
-                  setFridgeIngredients={setFridgeIngredients}
+                  deleteIngredient={deleteIngredient}
                 />
               ),
             )}

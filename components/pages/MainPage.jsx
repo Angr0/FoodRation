@@ -8,7 +8,7 @@ import {
   CircularProgress,
   Stack,
 } from "@mui/joy";
-import FastAccessBox from "../Items/FastAccessBox.jsx";
+import FastAccessBox from "../items/FastAccessBox.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { matchSorter } from "match-sorter";

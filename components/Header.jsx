@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Box, Button, ListItem, Stack } from "@mui/joy";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "./Items/Logo.jsx";
+import Logo from "./items/Logo.jsx";
 import navigationTexts from "../helper/headerTexts.js";
 import { Link } from "react-router-dom";
 import ModalLogIn from "./modals/ModalLogIn.jsx";
 import ModalSignUp from "./modals/ModalSignUp.jsx";
-import MobileMenu from "./Items/MobileMenu.jsx";
+import MobileMenu from "./items/MobileMenu.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../redux/userSlice.js";
 

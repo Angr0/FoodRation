@@ -3,7 +3,7 @@ import { Button, Modal, ModalClose, ModalDialog, Stack } from "@mui/joy";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import BioChangeInput from "../Items/BioChangeInput.jsx";
+import BioChangeInput from "../items/BioChangeInput.jsx";
 
 const EditBioModal = ({ open, setOpen, userBio, setUserBio }) => {
   const username = useSelector((state) => state.user.username);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Card,
@@ -15,7 +15,7 @@ import {
 } from "@mui/joy";
 import { FaTrashAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import BioChangeInput from "../Items/BioChangeInput.jsx";
+import BioChangeInput from "../items/BioChangeInput.jsx";
 import { useForm } from "react-hook-form";
 import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +42,15 @@ const Profile = () => {
     setSnackbarOpen(false);
   };
 
-  const getExcludedIngredients = () => {
+  const getUserData = useCallback(() => {
+    axios
+      .get(`http://localhost:8000/user-data/${username}/`)
+      .then(({ data }) => {
+        setUserData(data);
+      });
+  }, [username]);
+
+  const getExcludedIngredients = useCallback(() => {
     axios
       .get(`http://localhost:8000/without-excluded/${username}/`)
       .then(({ data }) => {
@@ -53,15 +61,7 @@ const Profile = () => {
       });
 
     getUserData();
-  };
-
-  const getUserData = () => {
-    axios
-      .get(`http://localhost:8000/user-data/${username}/`)
-      .then(({ data }) => {
-        setUserData(data);
-      });
-  };
+  }, [getUserData, username]);
 
   useEffect(() => {
     if (!username) {
@@ -79,7 +79,7 @@ const Profile = () => {
         setValue("weight", weight);
         setValue("age", age);
       });
-  }, [username, setValue, navigate]);
+  }, [username, setValue, navigate, getExcludedIngredients, getUserData]);
 
   const saveBio = ({ age, height, weight }) => {
     axios

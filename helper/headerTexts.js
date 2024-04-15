@@ -5,6 +5,11 @@ const navigationTexts = [
     needsToBeLoggedIn: true,
   },
   {
+    text: "Shopping list",
+    link: "/shopping_list",
+    needsToBeLoggedIn: true,
+  },
+  {
     text: "Cooking history",
     link: "/cooking_history",
     needsToBeLoggedIn: true,

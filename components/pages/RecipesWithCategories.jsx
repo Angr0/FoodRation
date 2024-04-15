@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Stack } from "@mui/joy";
-import Flavours from "../Items/Flavours.jsx";
-import Sidebar from "../Items/Sidebar.jsx";
+import Flavours from "../items/Flavours.jsx";
+import Sidebar from "../items/Sidebar.jsx";
 import axios from "axios";
-import Recipes from "../Items/Recipes.jsx";
-import Categories from "../Items/Categories.jsx";
-import TemperatureToggle from "../Items/TemperatureToggle.jsx";
+import Recipes from "../items/Recipes.jsx";
+import Categories from "../items/Categories.jsx";
+import TemperatureToggle from "../items/TemperatureToggle.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

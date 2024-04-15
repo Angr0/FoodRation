@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgress, Stack } from "@mui/joy";
-import CookingHistoryCard from "../Items/CookingHistoryCard.jsx";
+import CookingHistoryCard from "../items/CookingHistoryCard.jsx";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -32,10 +32,10 @@ const CookingHistory = () => {
 
   return (
     <Stack alignItems="center" justifyContent="center" gap={2} mt={2} mb={2}>
-      {cookingHistory?.length === 0 ? (
-        "You haven't done any recipes yet! Get to work"
-      ) : loading ? (
+      {loading ? (
         <CircularProgress color="danger" />
+      ) : cookingHistory?.length === 0 ? (
+        "You haven't done any recipes yet! Get to work"
       ) : (
         cookingHistory.map(({ name, portions, date, icon_link }) => (
           <CookingHistoryCard

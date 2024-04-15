@@ -2,34 +2,15 @@ import React from "react";
 import { Button, Card, Stack } from "@mui/joy";
 import { CardMedia } from "@mui/material";
 import { FaTrashAlt } from "react-icons/fa";
-import axios from "axios";
-import { useSelector } from "react-redux";
 
-const FridgeIngredient = ({
+const IngredientsCard = ({
   name,
   quantity,
   iconUrl,
   unit_name,
-  setFridgeIngredients,
+  deleteIngredient,
+  deleteIcon = <FaTrashAlt />,
 }) => {
-  const username = useSelector((state) => state.user.username);
-
-  const deleteIngredient = () => {
-    axios
-      .delete(`http://localhost:8000/fridge/${username}/`, { data: [name] })
-      .then((r) => {
-        console.log(r);
-
-        axios
-          .get(`http://localhost:8000/fridge/${username}/`)
-          .then(({ data }) => {
-            setFridgeIngredients(
-              data.filter((fridgeIngredient) => fridgeIngredient?.quantity > 0),
-            );
-          });
-      });
-  };
-
   return (
     <Card sx={{ width: "49%", minWidth: "18rem" }} variant={"soft"}>
       <Stack direction={"row"} gap={2}>
@@ -52,8 +33,12 @@ const FridgeIngredient = ({
           <span>
             {quantity} [{unit_name}] {name}&nbsp;
           </span>
-          <Button onClick={deleteIngredient} color={"danger"} variant={"plain"}>
-            <FaTrashAlt />
+          <Button
+            onClick={() => deleteIngredient(name)}
+            color={"danger"}
+            variant={"plain"}
+          >
+            {deleteIcon}
           </Button>
         </Stack>
       </Stack>
@@ -61,4 +46,4 @@ const FridgeIngredient = ({
   );
 };
 
-export default FridgeIngredient;
+export default IngredientsCard;

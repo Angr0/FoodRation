@@ -139,6 +139,25 @@ const Recipe = () => {
       });
   };
 
+  const addToShoppingList = () => {
+    const listOfIngredients = ingredients.map(({ ingredient, quantity }) => ({
+      name: ingredient,
+      quantity,
+    }));
+
+    axios
+      .put(
+        `http://localhost:8000/shopping-list/${username}/`,
+        listOfIngredients,
+      )
+      .then((r) => {
+        console.log(r);
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  };
+
   return (
     <Stack alignItems={"center"} mt={2} mb={2}>
       <Card
@@ -230,7 +249,7 @@ const Recipe = () => {
             justifyContent={"space-between"}
           >
             <footer>author: {author_login}</footer>
-            <Stack direction={"row"} gap={1}>
+            <Stack direction={{ sm: "row" }} gap={1} alignItems={"center"}>
               <Input
                 type={"number"}
                 {...register("portions")}
@@ -241,6 +260,13 @@ const Recipe = () => {
               />
               <Button color={"danger"} onClick={handleSubmit(cookedMeal)}>
                 Cooked!
+              </Button>
+              <Button
+                color={"danger"}
+                variant={"outlined"}
+                onClick={addToShoppingList}
+              >
+                Add to shopping list
               </Button>
             </Stack>
           </Stack>
