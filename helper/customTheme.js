@@ -58,6 +58,8 @@ const customTheme = {
           outlinedHoverBg: "var(--joy-palette-danger-200)",
           outlinedHoverColor: "var(--joy-palette-neutral-50)",
           outlinedHoverBorder: "var(--joy-palette-danger-200)",
+          outlinedActiveColor: "var(--joy-palette-danger-200)"
+          
         },
         danger: {
           50: "#e2bd89",
