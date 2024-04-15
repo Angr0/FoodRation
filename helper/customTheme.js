@@ -73,6 +73,8 @@ const customTheme = {
           solidBg: "var(--joy-palette-danger-200)",
           outlinedHoverColor: "var(--joy-palette-neutral-50)",
           outlinedActiveColor: "var(--joy-palette-neutral-50)",
+          softBorder: "var(--joy-palette-danger-400)",
+          softBg: "var(--joy-palette-neutral-50)"
         },
         success: {
           50: "#fafafa",

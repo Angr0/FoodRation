@@ -112,6 +112,7 @@ const Calculator = () => {
               slotProps={{ input: { min: 0 } }}
               {...register("height")}
               color="danger"
+              variant="soft"
             />
 
             <FormLabel>Weight (kg)</FormLabel>
@@ -121,6 +122,7 @@ const Calculator = () => {
               slotProps={{ input: { min: 0 } }}
               {...register("weight")}
               color="danger"
+              variant="soft"
             />
 
             <FormLabel>Age</FormLabel>
@@ -130,6 +132,7 @@ const Calculator = () => {
               slotProps={{ input: { min: 0 } }}
               {...register("age")}
               color="danger"
+              variant="soft"
             />
 
             <Stack direction="row" gap={2}>
