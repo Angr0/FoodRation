@@ -66,13 +66,15 @@ const ModalSignUp = ({ open, setOpen }) => {
           <Stack gap={2}>
             <FormControl>
               <FormLabel>Login</FormLabel>
-              <Input {...register("login", { required: true })} />
+              <Input color="danger" variant="soft" {...register("login", { required: true })} />
             </FormControl>
             <FormControl>
               <FormLabel sx={{ color: !samePasswords ? "red" : "" }}>
                 Password
               </FormLabel>
               <Input
+                color="danger"
+                variant="soft"
                 type={"password"}
                 {...register("password", { required: true })}
               />
@@ -82,6 +84,8 @@ const ModalSignUp = ({ open, setOpen }) => {
                 Repeat password
               </FormLabel>
               <Input
+                color="danger"
+                variant="soft"
                 type={"password"}
                 {...register("repeat_password", { required: true })}
               />
@@ -105,6 +109,8 @@ const ModalSignUp = ({ open, setOpen }) => {
             <FormControl>
               <FormLabel>Height</FormLabel>
               <Input
+                color="danger"
+                variant="soft"
                 type="number"
                 defaultValue={1}
                 slotProps={{
@@ -120,6 +126,8 @@ const ModalSignUp = ({ open, setOpen }) => {
             <FormControl>
               <FormLabel>Weight</FormLabel>
               <Input
+                color="danger"
+                variant="soft"
                 type="number"
                 defaultValue={1}
                 slotProps={{
@@ -135,6 +143,8 @@ const ModalSignUp = ({ open, setOpen }) => {
             <FormControl>
               <FormLabel>Age</FormLabel>
               <Input
+                color="danger"
+                variant="soft"
                 type="number"
                 defaultValue={1}
                 slotProps={{
