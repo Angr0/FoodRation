@@ -248,7 +248,7 @@ const Recipe = () => {
               ))}
             </Box>
             <List>
-              Ingredients:
+              <h3>Ingredients:</h3>
               {ingredients?.map(({ ingredient, quantity, unit }) => (
                 <ListItem key={ingredient}>
                   {decimalToFraction(quantity * (watch("portions") || 1))}{" "}
@@ -257,7 +257,7 @@ const Recipe = () => {
               ))}
             </List>
             <List>
-              Steps:
+              <h3>Steps:</h3>
               {steps?.map(({ number, description }) => (
                 <ListItem key={number}>
                   {number}. {description}
@@ -270,7 +270,7 @@ const Recipe = () => {
             direction={{ xs: "column-reverse", sm: "row" }}
             justifyContent={"space-between"}
           >
-            <footer>author: {author_login}</footer>
+            <footer><b>author: {author_login}</b></footer>
             <Stack direction={{ sm: "row" }} gap={1} alignItems={"center"}>
               <Input
                 color="danger"
