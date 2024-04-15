@@ -216,7 +216,7 @@ const Profile = () => {
               freeSolo
               disableClearable
               variant="outlined"
-              color="danger"
+              color="success"
               placeholder={"Find your recipe"}
               options={excludedIngredients}
               getOptionLabel={(option) => option.name}

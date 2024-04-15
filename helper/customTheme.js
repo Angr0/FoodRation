@@ -58,6 +58,8 @@ const customTheme = {
           outlinedHoverBg: "var(--joy-palette-danger-200)",
           outlinedHoverColor: "var(--joy-palette-neutral-50)",
           outlinedHoverBorder: "var(--joy-palette-danger-200)",
+          outlinedActiveColor: "var(--joy-palette-danger-200)"
+          
         },
         danger: {
           50: "#e2bd89",
@@ -74,19 +76,20 @@ const customTheme = {
           outlinedHoverColor: "var(--joy-palette-neutral-50)",
           outlinedActiveColor: "var(--joy-palette-neutral-50)",
           softBorder: "var(--joy-palette-danger-400)",
-          softBg: "var(--joy-palette-neutral-50)"
+          softBg: "var(--joy-palette-neutral-50)",
         },
         success: {
-          50: "#fafafa",
-          100: "#f9f9f9",
-          200: "#f8f8f8",
-          300: "#f7f7f7",
-          400: "#f6f6f6",
-          500: "#f5f5f5",
-          600: "#dddddd",
-          700: "#c4c4c4",
-          800: "#acacac",
-          900: "#939393",
+          50: "#e2bd89",
+          100: "#dcaf71",
+          200: "#d6a259",
+          300: "#d09541",
+          400: "#ca872a",
+          500: "#c47a12",
+          600: "#b06e10",
+          700: "#9d620e",
+          800: "#89550d",
+          900: "#76490b",
+
         },
         warning: {
           50: "#808a94",
