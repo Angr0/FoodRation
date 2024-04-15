@@ -111,6 +111,7 @@ const Calculator = () => {
               type={"number"}
               {...register("height")}
               color="danger"
+              variant="soft"
             />
 
             <FormLabel>Weight (kg)</FormLabel>
@@ -119,6 +120,7 @@ const Calculator = () => {
               type={"number"}
               {...register("weight")}
               color="danger"
+              variant="soft"
             />
 
             <FormLabel>Age</FormLabel>
@@ -127,6 +129,7 @@ const Calculator = () => {
               type={"number"}
               {...register("age")}
               color="danger"
+              variant="soft"
             />
 
             <Stack direction="row" gap={2}>
