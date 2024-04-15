@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, CircularProgress, Stack } from "@mui/joy";
 import IngredientsCard from "../items/IngredientsCard.jsx";
 import { MdOutlineDone } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 
 const ShoppingList = () => {
   const username = useSelector((state) => state.user.username);
@@ -12,14 +13,7 @@ const ShoppingList = () => {
   const [shoppingList, setShoppingList] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!username) {
-      navigate("/");
-      return;
-    }
-
-    setLoading(true);
-
+  const getIngredients = useCallback(() => {
     axios
       .get(`http://localhost:8000/shopping-list/${username}/`)
       .then(({ data }) => {
@@ -30,11 +24,55 @@ const ShoppingList = () => {
       .catch((errors) => {
         console.log(errors);
       });
-  }, [navigate, username]);
+  }, [username]);
 
-  const deleteIngredient = () => {};
+  useEffect(() => {
+    if (!username) {
+      navigate("/");
+      return;
+    }
 
-  const clearShoppingList = () => {};
+    setLoading(true);
+    getIngredients();
+  }, [getIngredients, navigate, username]);
+
+  const deleteIngredient = (name) => {
+    console.log([name]);
+    axios
+      .delete(`http://localhost:8000/remove-shopping-element/${username}/`, {
+        data: [name],
+      })
+      .then((r) => {
+        console.log(r);
+
+        getIngredients();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  };
+
+  const clearShoppingList = () => {
+    axios
+      .delete(`http://localhost:8000/shopping-list/${username}/`)
+      .then((r) => {
+        console.log(r);
+        getIngredients();
+      });
+  };
+
+  const addIngredientToFridge = (name) => {
+    console.log(name);
+
+    axios
+      .delete(`http://localhost:8000/tick-ingredient/${username}/`, {
+        data: [name],
+      })
+      .then((r) => {
+        console.log(r);
+        getIngredients();
+      });
+  };
 
   return (
     <Stack alignItems="center" justifyContent="center" gap={2} mt={2} mb={4}>
@@ -61,8 +99,24 @@ const ShoppingList = () => {
                 quantity={quantity}
                 iconUrl={icon_link}
                 unit_name={unit_name}
-                deleteIngredient={deleteIngredient}
-                deleteIcon={<MdOutlineDone style={{ fontSize: "1.5rem" }} />}
+                buttons={
+                  <>
+                    <Button
+                      color={"danger"}
+                      variant={"plain"}
+                      onClick={() => addIngredientToFridge(ingredient_name)}
+                    >
+                      <MdOutlineDone style={{ fontSize: "1.5rem" }} />
+                    </Button>
+                    <Button
+                      onClick={() => deleteIngredient(ingredient_name)}
+                      color={"danger"}
+                      variant={"plain"}
+                    >
+                      <FaTrashAlt />
+                    </Button>
+                  </>
+                }
               />
             ),
           )}

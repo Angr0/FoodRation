@@ -1,16 +1,8 @@
 import React from "react";
-import { Button, Card, Stack } from "@mui/joy";
+import { Card, Stack } from "@mui/joy";
 import { CardMedia } from "@mui/material";
-import { FaTrashAlt } from "react-icons/fa";
 
-const IngredientsCard = ({
-  name,
-  quantity,
-  iconUrl,
-  unit_name,
-  deleteIngredient,
-  deleteIcon = <FaTrashAlt />,
-}) => {
+const IngredientsCard = ({ name, quantity, iconUrl, unit_name, buttons }) => {
   return (
     <Card sx={{ width: "49%", minWidth: "18rem" }} variant={"soft"}>
       <Stack direction={"row"} gap={2}>
@@ -33,13 +25,9 @@ const IngredientsCard = ({
           <span>
             {quantity} [{unit_name}] {name}&nbsp;
           </span>
-          <Button
-            onClick={() => deleteIngredient(name)}
-            color={"danger"}
-            variant={"plain"}
-          >
-            {deleteIcon}
-          </Button>
+          <Stack direction={"row"} gap={1}>
+            {buttons}
+          </Stack>
         </Stack>
       </Stack>
     </Card>

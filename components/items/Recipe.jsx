@@ -139,10 +139,10 @@ const Recipe = () => {
       });
   };
 
-  const addToShoppingList = () => {
+  const addToShoppingList = ({ portions }) => {
     const listOfIngredients = ingredients.map(({ ingredient, quantity }) => ({
       name: ingredient,
-      quantity,
+      quantity: quantity * (parseInt(portions) || 1),
     }));
 
     axios
@@ -152,6 +152,7 @@ const Recipe = () => {
       )
       .then((r) => {
         console.log(r);
+        openSnackbar("Added to shopping list!");
       })
       .catch((errors) => {
         console.log(errors);
@@ -266,7 +267,7 @@ const Recipe = () => {
               <Button
                 color={"danger"}
                 variant={"outlined"}
-                onClick={addToShoppingList}
+                onClick={handleSubmit(addToShoppingList)}
               >
                 Add to shopping list
               </Button>

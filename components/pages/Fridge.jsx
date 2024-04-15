@@ -7,6 +7,7 @@ import SelectIngredients from "../items/SelectIngredients.jsx";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Fridge = () => {
   const username = useSelector((state) => state.user.username);
@@ -155,7 +156,15 @@ const Fridge = () => {
                   quantity={quantity}
                   iconUrl={icon_link}
                   unit_name={unit_name}
-                  deleteIngredient={deleteIngredient}
+                  buttons={
+                    <Button
+                      onClick={() => deleteIngredient(ingredient_name)}
+                      color={"danger"}
+                      variant={"plain"}
+                    >
+                      <FaTrashAlt />
+                    </Button>
+                  }
                 />
               ),
             )}
